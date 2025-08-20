@@ -4,8 +4,9 @@ from typing import List, Tuple, Literal, Optional
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from flask.cli import load_dotenv
 from pydantic import BaseModel
-from dotenv import load_dotenv
+
 
 
 from core.pdf_utils import extract_pages, chunk_pages

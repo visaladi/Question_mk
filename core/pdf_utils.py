@@ -7,9 +7,9 @@ def extract_pages(path: str) -> List[Tuple[int, str]]:
     doc = fitz.open(path)
     pages = []
     for i in range(len(doc)):
-    text = doc[i].get_text("text")
-    text = _strip_headers_footers(text)
-    pages.append((i+1, text))
+        text = doc[i].get_text("text")
+        text = _strip_headers_footers(text)
+        pages.append((i+1, text))
     doc.close()
     return pages
 

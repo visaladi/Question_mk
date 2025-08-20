@@ -15,18 +15,18 @@ KEEP_LABELS = {"PER","ORG","LOC","MISC"}
 
 
 def extract_keywords(text: str, top_k: int = 30, min_len: int = 3) -> List[str]:
-ents = _ner(text)
-spans = []
-for e in ents:
-if e.get("entity_group") in KEEP_LABELS:
-word = e.get("word"," ").strip()
-if len(word) >= min_len:
-spans.append(word)
-# Deduplicate, keep order
-seen, out = set(), []
-for s in spans:
-k = s.lower()
-if k not in seen:
-seen.add(k)
-out.append(s)
-return out[:top_k]
+    ents = _ner(text)
+    spans = []
+    for e in ents:
+        if e.get("entity_group") in KEEP_LABELS:
+            word = e.get("word"," ").strip()
+            if len(word) >= min_len:
+                spans.append(word)
+    # Deduplicate, keep order
+    seen, out = set(), []
+    for s in spans:
+        k = s.lower()
+        if k not in seen:
+            seen.add(k)
+            out.append(s)
+    return out[:top_k]

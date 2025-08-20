@@ -22,6 +22,6 @@ class EmbedStore:
         D, I = self.index.search(np.array(qv, dtype="float32"), k)
         out = []
         for idx in I[0]:
-        chunk, pages = self.meta[idx]
-        out.append((chunk, pages))
+            chunk, pages = self.meta[idx]
+            out.append((chunk, pages))
         return out

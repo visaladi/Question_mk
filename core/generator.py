@@ -31,7 +31,7 @@ class QuestionGenerator:
         batch = MCQBatch(**payload)
         for it in batch.items:
             if not (0 <= it.answer_index < 4 and len(it.options) == 4):
-        raise ValueError("Invalid MCQ structure.")
+                raise ValueError("Invalid MCQ structure.")
         return batch
 
 
