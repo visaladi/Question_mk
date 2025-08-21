@@ -8,25 +8,18 @@ class LLMClient:
     - ollama: runs locally at http://localhost:11434
     - hf (HuggingFace transformers): local text-generation pipeline
     """
-    def __init__(self, backend: Literal["openai","ollama","hf"]="openai", model: Optional[str]=None):
+    def __init__(self, backend: Literal["ollama","hf"]="ollama", model: Optional[str]=None):
         self.backend = backend
-        self.model = model or (
-        "gpt-4o-mini" if backend=="openai" else ("llama3.1:latest" if backend=="ollama" else "Qwen/Qwen2.5-7B-Instruct")
-        )
-        if backend == "openai":
-            from openai import OpenAI
-            base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
-            self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=base_url)
-        elif backend == "ollama":
+        self.model = model or ("llama3.1:latest" if backend=="ollama" else "Qwen/Qwen2.5-7B-Instruct")
+        if backend == "ollama":
             import requests
             self.requests = requests
             self.ollama_url = os.getenv("OLLAMA_URL","http://localhost:11434")
-        else:
+        else:  # hf
             from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
             tok = AutoTokenizer.from_pretrained(self.model)
             mdl = AutoModelForCausalLM.from_pretrained(self.model, torch_dtype="auto", device_map="auto")
             self.pipe = pipeline("text-generation", model=mdl, tokenizer=tok)
-
 
     def chat_json(self, system: str, user: str, temperature: float=0.2, max_tokens: int=1200):
             if self.backend == "openai":
