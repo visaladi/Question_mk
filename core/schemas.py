@@ -19,14 +19,21 @@ class MCQItem(BaseModel):
 class MCQBatch(BaseModel):
     items: List[MCQItem]
 
-
 class EssayItem(BaseModel):
     question: str
-    bloom: Bloom
-    difficulty: Difficulty
-    target_keywords: List[str] = Field(default_factory=list)
-    rubric_bullets: List[str] = Field(default_factory=list)
-    source_pages: List[int] = Field(default_factory=list)
+    difficulty: Literal["easy","medium","hard"] = "medium"
+    bloom: str = "Understand"
+    rubric_bullets: List[str] = []
+    target_keywords: List[str] = []
+    source_pages: List[int] = []
+
+    @field_validator("difficulty", mode="before")
+    def _norm_diff(cls, v):
+        if v is None: return "medium"
+        s = str(v).strip().lower()
+        # map common variants
+        m = {"e": "easy", "m": "medium", "h": "hard"}
+        return m.get(s, s)
 
 
 class EssayBatch(BaseModel):

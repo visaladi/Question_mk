@@ -101,6 +101,13 @@ async def generate_once(
         else:
             user = ESSAY_USER.format(context=context, n=count)
             payload = llm.chat_json(ESSAY_SYSTEM, user, temperature=0.4, max_tokens=1200)
+
+            # normalize difficulty values returned by the model
+            for it in payload.get("items", []):
+                d = it.get("difficulty")
+                if isinstance(d, str):
+                    it["difficulty"] = d.strip().lower()
+
             batch = EssayBatch(**payload)
             result = batch.model_dump()
 
