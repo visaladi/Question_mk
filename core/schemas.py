@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import List, Literal, Optional
 
 
@@ -33,10 +33,18 @@ class EssayBatch(BaseModel):
     items: List[EssayItem]
 
 
+BAD_MODEL_VALUES = {"", " ", "string", "null", "none", "None", "String"}
+
 class GenerateReq(BaseModel):
     topic: str = "full document"
     count: int = 5
-    difficulty: Difficulty = "medium"
+    difficulty: Literal["easy","medium","hard"] = "medium"
     qtype: Literal["mcq","essay"] = "mcq"
-    llm_backend: Literal["openai","ollama","hf"] = "openai"
+    llm_backend: Literal["ollama","hf"] = "ollama"
     llm_model: Optional[str] = None
+
+    @field_validator("llm_model")
+    def _clean_model(cls, v):
+        if v is None:
+            return v
+        return None if v in BAD_MODEL_VALUES else v

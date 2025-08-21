@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PDF → Questions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- HTMX (CDN) -->
+  <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+</head>
+<body class="bg-gray-50">
+  <div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-2">PDF → Questions (RAG)</h1>
+    <p class="text-sm text-gray-600 mb-6">Backend: {{ backend }} · Model: {{ model }}</p>
+
+    <form id="gen-form"
+          class="space-y-4 bg-white p-6 rounded-2xl shadow"
+          hx-post="/generate_once"
+          hx-encoding="multipart/form-data"
+          hx-target="#result"
+          hx-indicator="#spinner"
+          hx-swap="innerHTML">
+      <div>
+        <label class="block text-sm font-medium mb-1">PDF file</label>
+        <input type="file" name="pdf" accept="application/pdf" required
+               class="block w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-indigo-600 file:text-white hover:file:bg-indigo-700"/>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Question type</label>
+          <select name="qtype" class="w-full border rounded-xl p-2" required>
+            <option value="mcq">MCQ</option>
+            <option value="essay">Essay</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1">Difficulty</label>
+          <select name="difficulty" class="w-full border rounded-xl p-2">
+            <option>easy</option>
+            <option selected>medium</option>
+            <option>hard</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1">Count</label>
+          <input type="number" name="count" value="5" min="1" max="20"
+                 class="w-full border rounded-xl p-2"/>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1">Topic (optional)</label>
+          <input type="text" name="topic" placeholder="full document"
+                 class="w-full border rounded-xl p-2"/>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button type="submit"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">
+          Generate
+        </button>
+        <div id="spinner" class="htmx-indicator text-sm text-gray-600">Processing…</div>
+      </div>
+    </form>
+
+    <div id="result" class="mt-6"></div>
+  </div>
+
+  <script>
+    // helpers
+    const esc = (s) => (s ?? "").toString()
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;");
+
+    function renderMCQs(items) {
+      return items.map((q, i) => {
+        const name = `mcq_${i}`;
+        const options = q.options.map((opt, j) => {
+          return `
+            <label class="flex items-start gap-2 p-2 rounded-lg border hover:bg-gray-50">
+              <input type="radio" name="${name}" value="${j}" class="mt-1" />
+              <span class="text-sm">${esc(opt)}</span>
+            </label>
+          `;
+        }).join("");
+
+        const pages = q.source_pages && q.source_pages.length ? ` (pages: ${q.source_pages.join(", ")})` : "";
+
+        return `
+          <div class="bg-white rounded-2xl shadow p-5 space-y-3" data-answer="${q.answer_index}">
+            <div class="flex items-start justify-between gap-4">
+              <div class="font-semibold">${i+1}. ${esc(q.question)}</div>
+              <div class="text-xs text-gray-500">${esc(q.bloom)} · ${esc(q.difficulty)}${esc(pages)}</div>
+            </div>
+
+            <div class="space-y-2">${options}</div>
+
+            <div class="flex items-center gap-2">
+              <button class="check-btn px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-sm">Check</button>
+              <span class="result text-sm"></span>
+            </div>
+
+            <div class="rationale hidden mt-2 text-sm text-gray-700">
+              <div class="font-medium">Why:</div>
+              <div>${esc(q.rationale)}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderEssays(items) {
+      return items.map((q, i) => {
+        const pages = q.source_pages && q.source_pages.length ? ` (pages: ${q.source_pages.join(", ")})` : "";
+        const rubric = (q.rubric_bullets || []).map(b => `<li class="list-disc ml-6">${esc(b)}</li>`).join("");
+        const kw = (q.target_keywords || []).map(k => `<span class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 text-xs">${esc(k)}</span>`).join(" ");
+        return `
+          <div class="bg-white rounded-2xl shadow p-5 space-y-3">
+            <div class="flex items-start justify-between gap-4">
+              <div class="font-semibold">${i+1}. ${esc(q.question)}</div>
+              <div class="text-xs text-gray-500">${esc(q.bloom)} · ${esc(q.difficulty)}${esc(pages)}</div>
+            </div>
+            ${kw ? `<div class="flex flex-wrap gap-2">${kw}</div>` : ""}
+            ${rubric ? `<div><div class="font-medium text-sm">Rubric:</div><ul class="mt-1 text-sm">${rubric}</ul></div>` : ""}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderPanel(data) {
+      const saved = esc(data.saved_to || "");
+      const items = data.data?.items || [];
+      const header = `
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-lg font-semibold">Generated ${data.qtype?.toUpperCase()} (${items.length})</div>
+            ${saved ? `<div class="text-sm text-gray-500">Saved to: ${saved}</div>` : ""}
+          </div>
+          <div class="flex gap-2">
+            <button id="download-json" class="px-3 py-2 bg-gray-800 text-white rounded-xl text-sm">Download JSON</button>
+            ${data.qtype === "mcq" ? `<button id="reveal-all" class="px-3 py-2 bg-amber-600 text-white rounded-xl text-sm">Reveal All</button>` : ""}
+          </div>
+        </div>
+      `;
+
+      const body = data.qtype === "mcq"
+        ? renderMCQs(items)
+        : renderEssays(items);
+
+      return `
+        <div class="bg-white p-6 rounded-2xl shadow space-y-4">
+          ${header}
+          <div id="qa-list" class="space-y-4">${body}</div>
+        </div>
+      `;
+    }
+
+    // Hook HTMX response
+    document.body.addEventListener('htmx:afterRequest', (e) => {
+      if (!e.detail?.xhr) return;
+      const el = document.getElementById('result');
+
+      try {
+        const data = JSON.parse(e.detail.xhr.responseText);
+        el.innerHTML = renderPanel(data);
+
+        // Download JSON
+        const dl = document.getElementById('download-json');
+        if (dl) {
+          dl.addEventListener('click', () => {
+            const blob = new Blob([JSON.stringify(data.data, null, 2)], { type:'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = `${data.qtype || 'questions'}.json`;
+            document.body.appendChild(a); a.click();
+            URL.revokeObjectURL(url); a.remove();
+          });
+        }
+
+        // MCQ interactions
+        if (data.qtype === "mcq") {
+          const list = document.getElementById('qa-list');
+
+          // per-question Check button
+          list.querySelectorAll('.check-btn').forEach((btn, idx) => {
+            btn.addEventListener('click', () => {
+              const card = btn.closest('[data-answer]');
+              const correct = parseInt(card.dataset.answer, 10);
+              const picked = [...card.querySelectorAll('input[type="radio"]')].find(r => r.checked);
+              const resultEl = card.querySelector('.result');
+              const rationale = card.querySelector('.rationale');
+
+              if (!picked) {
+                resultEl.textContent = "Pick an option first.";
+                resultEl.className = "result text-sm text-gray-600";
+                return;
+              }
+              const val = parseInt(picked.value, 10);
+              if (val === correct) {
+                resultEl.textContent = "Correct ✅";
+                resultEl.className = "result text-sm text-green-700";
+              } else {
+                resultEl.textContent = `Incorrect ❌ (Correct: ${correct+1})`;
+                resultEl.className = "result text-sm text-red-700";
+              }
+              rationale.classList.remove('hidden');
+            });
+          });
+
+          // Reveal all
+          const reveal = document.getElementById('reveal-all');
+          if (reveal) {
+            reveal.addEventListener('click', () => {
+              list.querySelectorAll('[data-answer]').forEach(card => {
+                const correct = parseInt(card.dataset.answer, 10);
+                const opts = [...card.querySelectorAll('input[type="radio"]')];
+                if (opts[correct]) opts[correct].parentElement.classList.add('ring-2','ring-green-500');
+                card.querySelector('.rationale').classList.remove('hidden');
+                const res = card.querySelector('.result');
+                res.textContent = `Correct answer: ${correct+1}`;
+                res.className = "result text-sm text-blue-700";
+              });
+            });
+          }
+        }
+      } catch (err) {
+        el.innerHTML = `
+          <div class="bg-white p-4 rounded-2xl shadow text-red-600">
+            <b>Error:</b> ${esc(e.detail.xhr.responseText || 'Unknown')}
+          </div>`;
+      }
+    });
+</script>
+
+</body>
+</html>
