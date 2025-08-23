@@ -38,55 +38,7 @@ class LLMClient:
 
         elif backend == "ollama":
             self.ollama_url = os.getenv("OLLAMA_URL","http://localhost:11434")
-        elif backend=="lora":
 
-            import torch
-            from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
-
-            load_kwargs = dict(
-                device_map="auto",
-                trust_remote_code=True,
-            )
-
-            # Optional 4-bit loading
-            if config.LORA_4BIT:
-                try:
-                    import bitsandbytes as bnb  # noqa: F401
-                except Exception as e:
-                    raise RuntimeError(
-                        "LORA_4BIT=True requires 'bitsandbytes'. Install it and a CUDA build of PyTorch."
-                    ) from e
-                load_kwargs.update({
-                    "load_in_4bit": True,
-                    "bnb_4bit_compute_dtype": torch.bfloat16 if hasattr(torch, "bfloat16") else torch.float16,
-                })
-
-            tok = AutoTokenizer.from_pretrained(self.model, trust_remote_code=True)
-            base = AutoModelForCausalLM.from_pretrained(self.model, **load_kwargs)
-
-            # Attach LoRA if configured
-            lora_id = (config.LORA_ADAPTER or "").strip()
-            if lora_id:
-                try:
-                    from peft import PeftModel
-                except Exception as e:
-                    raise RuntimeError("LoRA requested but 'peft' is not installed. pip install peft") from e
-
-                base = PeftModel.from_pretrained(base, lora_id)
-                base.eval()
-
-                if config.LORA_MERGE_AND_UNLOAD:
-                    # Merge the adapter into base weights to speed up inference a bit
-                    base = base.merge_and_unload()
-
-            # Create a text-generation pipeline; keeps your existing behavior
-            self.pipe = pipeline(
-                "text-generation",
-                model=base,
-                tokenizer=tok,
-                # sensible defaults for instruction models; endpoint can override via chat_json args
-                return_full_text=False
-            )
         else:  # hf
             from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
             tok = AutoTokenizer.from_pretrained(self.model, trust_remote_code=True)
