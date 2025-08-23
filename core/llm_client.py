@@ -25,7 +25,7 @@ class LLMClient:
       - ollama: local (http://localhost:11434)
       - hf: HuggingFace transformers (local)
     """
-    def __init__(self, backend: Literal["gemini","ollama","hf","lora"]="gemini", model: Optional[str]=None):
+    def __init__(self, backend: Literal["gemini","ollama","hf"]="gemini", model: Optional[str]=None):
         self.backend = backend
         self.model = _sanitize_model(backend, model)
         self.requests = requests
