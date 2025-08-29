@@ -13,8 +13,10 @@ def _sanitize_model(backend: str, model: Optional[str]) -> str:
         if backend == "gemini":
             return "gemini-2.0-flash"
         elif backend == "ollama":
-            return "llama3.1:8b"
+            # Default to your requested Ollama model
+            return "qwen2.5:1.5b-instruct"
         else:
+            # hf (HuggingFace local)
             return "Qwen/Qwen2.5-7B-Instruct"
     return model  # type: ignore
 
@@ -25,7 +27,11 @@ class LLMClient:
       - ollama: local (http://localhost:11434)
       - hf: HuggingFace transformers (local)
     """
-    def __init__(self, backend: Literal["gemini","ollama","hf"]="gemini", model: Optional[str]=None):
+    def __init__(
+        self,
+        backend: Literal["gemini","ollama","hf"] = config.LLM_BACKEND,
+        model: Optional[str] = config.LLM_MODEL
+    ):
         self.backend = backend
         self.model = _sanitize_model(backend, model)
         self.requests = requests
@@ -37,7 +43,8 @@ class LLMClient:
             self.base = "https://generativelanguage.googleapis.com/v1beta"
 
         elif backend == "ollama":
-            self.ollama_url = os.getenv("OLLAMA_URL","http://localhost:11434")
+            # Allow override via env var; default to local daemon
+            self.ollama_url = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
         else:  # hf
             from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
@@ -56,24 +63,14 @@ class LLMClient:
         }
         # Ask Gemini to return JSON only
         payload = {
-            "systemInstruction": {
-                "role": "system",
-                "parts": [{"text": system}]
-            },
-            "contents": [
-                {
-                    "role": "user",
-                    "parts": [{"text": user}]
-                }
-            ],
+            "systemInstruction": {"role": "system", "parts": [{"text": system}]},
+            "contents": [{"role": "user", "parts": [{"text": user}]}],
             "generationConfig": {
                 "temperature": temperature,
-                # Many clients accept this hint for structured output:
                 "response_mime_type": "application/json",
-                # Some SDKs use camelCase:
                 "responseMimeType": "application/json",
-                "maxOutputTokens": max_tokens
-            }
+                "maxOutputTokens": max_tokens,
+            },
         }
         r = self.requests.post(url, headers=headers, data=json.dumps(payload), timeout=120)
         r.raise_for_status()
@@ -99,25 +96,108 @@ class LLMClient:
         if self.backend == "gemini":
             return self._gemini_call(system, user, temperature, max_tokens)
 
+
         elif self.backend == "ollama":
+
             payload = {
+
                 "model": self.model,
-                "format": "json",
+
+                "format": "json",  # ask model to return JSON content
+
+                "stream": False,  # <<< IMPORTANT: single JSON object instead of NDJSON stream
+
                 "options": {"temperature": temperature},
+
                 "messages": [
-                    {"role":"system","content":system},
-                    {"role":"user","content":user}
-                ]
+
+                    {"role": "system", "content": system},
+
+                    {"role": "user", "content": user},
+
+                ],
+
             }
+
             try:
+
                 r = self.requests.post(f"{self.ollama_url}/api/chat", json=payload, timeout=600)
+
                 r.raise_for_status()
+
             except requests.exceptions.ConnectionError as e:
+
                 raise RuntimeError(
-                    f"Ollama not reachable at {self.ollama_url}. Run 'ollama serve' and pull a model."
+
+                    f"Ollama not reachable at {self.ollama_url}. Run 'ollama serve' and ensure the model is pulled."
+
                 ) from e
-            data = r.json()
-            return json.loads(data["message"]["content"])
+
+            # Primary path: single JSON object
+
+            try:
+
+                data = r.json()
+
+                content = data.get("message", {}).get("content", "")
+
+            except ValueError:
+
+                # Fallback: handle NDJSON (if some Ollama versions ignore stream=False)
+
+                texts = []
+
+                for line in r.text.splitlines():
+
+                    line = line.strip()
+
+                    if not line:
+                        continue
+
+                    try:
+
+                        obj = json.loads(line)
+
+                        msg = obj.get("message", {}).get("content")
+
+                        if msg:
+                            texts.append(msg)
+
+                    except Exception:
+
+                        continue
+
+                content = "".join(texts)
+
+            if not content:
+                snippet = r.text[:300].replace("\n", "\\n")
+
+                raise RuntimeError(f"Ollama returned no content. Raw: {snippet}")
+
+            # Ensure the model's content is valid JSON (strip code fences if present)
+
+            try:
+
+                return json.loads(content)
+
+            except json.JSONDecodeError:
+
+                # ```json ... ``` fences
+
+                m = re.search(r'```(?:json)?\s*(\{[\s\S]*?\})\s*```', content, flags=re.S | re.I)
+
+                if m:
+                    return json.loads(m.group(1))
+
+                # largest { ... } block heuristic
+
+                m = re.search(r'\{[\s\S]*\}', content, flags=re.S)
+
+                if m:
+                    return json.loads(m.group(0))
+
+                raise RuntimeError(f"Model did not return JSON. Raw: {content[:400]}")
+
 
         else:  # hf
             out = self.pipe(

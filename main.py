@@ -1,9 +1,9 @@
 # main.py
 import os, json, tempfile, datetime
 from typing import Optional, Literal
-
+from fastapi.responses import FileResponse, Response
 import uvicorn
-from fastapi import FastAPI, UploadFile, File, HTTPException, Form
+from fastapi import FastAPI, UploadFile, File, HTTPException, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from fastapi.staticfiles import StaticFiles
@@ -16,6 +16,8 @@ from core.schemas import MCQBatch, EssayBatch
 from core.llm_client import LLMClient
 from core.prompts import MCQ_SYSTEM, MCQ_USER, ESSAY_SYSTEM, ESSAY_USER
 from pathlib import Path
+import re
+
 # Optional extras (safe import)
 try:
     from extras.rerank import Reranker
@@ -41,6 +43,100 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 
+_ALLOWED_BLOOM = {"Remember","Understand","Apply","Analyze","Evaluate","Create"}
+_BLOOM_SYNONYMS = {
+    # common alternates -> canonical
+    "comprehension": "Understand",
+    "understanding": "Understand",
+    "knowledge": "Remember",
+    "remembering": "Remember",
+    "application": "Apply",
+    "analysis": "Analyze",
+    "synthesis": "Create",
+    "creation": "Create",
+    "evaluating": "Evaluate",
+    "evaluation": "Evaluate",
+}
+def _norm_bloom(v):
+    if isinstance(v, str):
+        t = v.strip().lower()
+        if t in {x.lower() for x in _ALLOWED_BLOOM}:
+            return t.capitalize()
+        if t in _BLOOM_SYNONYMS:
+            return _BLOOM_SYNONYMS[t]
+    return "Understand"  # safe default
+
+def _norm_difficulty(v):
+    # Map a bunch of synonyms → {"easy","medium","hard"}
+    EASY = {"easy","beginner","basic","foundation","intro","introductory","elementary"}
+    MED  = {"medium","med","moderate","intermediate","avg","average","normal","standard"}
+    HARD = {"hard","difficult","advanced","challenging","tough","complex"}
+
+    if isinstance(v, str):
+        t = v.strip().lower()
+        if t in EASY:  return "easy"
+        if t in MED:   return "medium"
+        if t in HARD:  return "hard"
+    elif isinstance(v, (int, float)):
+        # Optional numeric mapping
+        if v <= 1: return "easy"
+        if v >= 3: return "hard"
+        return "medium"
+    return "medium"
+
+
+def _norm_answer_index(item):
+    """
+    Coerce answer_index into 0..3. Supports:
+      - int (0..3 or 1..4)
+      - str: 'A'/'B'/'C'/'D', '1'..'4', 'Option 2', the exact correct option text in 'answer'/'correct'/'solution'
+    """
+    idx = item.get("answer_index", None)
+    opts = item.get("options", [])
+    # If correct answer is provided as text, map to its index
+    for key in ("answer", "correct", "correct_option", "solution"):
+        if idx is None and isinstance(item.get(key), str) and opts:
+            try:
+                pos = [o.strip() for o in opts].index(item[key].strip())
+                return pos
+            except ValueError:
+                pass
+
+    # Strings like 'B', '2', 'Option 3'
+    if isinstance(idx, str):
+        s = idx.strip().upper()
+        m = re.search(r'([A-D])', s)
+        if m:
+            return "ABCD".index(m.group(1))
+        m = re.search(r'(\d+)', s)
+        if m:
+            n = int(m.group(1))
+            if n in (1,2,3,4):
+                return n-1
+        # last resort: try exact text match
+        if opts and s in [o.strip().upper() for o in opts]:
+            return [o.strip().upper() for o in opts].index(s)
+
+    # Ints 1..4 or 0..3
+    if isinstance(idx, int):
+        if 0 <= idx <= 3:
+            return idx
+        if 1 <= idx <= 4:
+            return idx - 1
+
+    return None  # let downstream validator catch if still invalid
+
+def _sanitize_option_texts(options):
+    out = []
+    for o in options[:4]:  # keep first 4 only
+        if isinstance(o, str):
+            # remove leading "A) ", "1. ", etc.
+            out.append(re.sub(r'^\s*([A-D]|\d+)[\.\)]\s*', '', o).strip())
+        else:
+            out.append(str(o))
+    return out
+# --- end helpers ---
+
 @app.get("/health")
 def health():
     return {
@@ -49,6 +145,14 @@ def health():
         "model": config.LLM_MODEL,
         "rerank_enabled": config.USE_RERANK and Reranker is not None,
     }
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    path = STATIC_DIR / "favicon.ico"
+    if path.exists():
+        return FileResponse(str(path))
+    # fallback if file missing (prevents 404 spam)
+    return Response(status_code=204)
 
 @app.post("/generate_once")
 async def generate_once(
@@ -68,7 +172,11 @@ async def generate_once(
     try:
         # 2) Extract + chunk
         pages = extract_pages(path)
+        if not pages:
+            raise HTTPException(400, "No text found in the PDF.")
         chunks = list(chunk_pages(pages, max_chars=1800, overlap=200))
+        if not chunks:
+            raise HTTPException(400, "Could not create chunks from the PDF content.")
 
         # 3) Build in-memory embed store
         store = EmbedStore()
@@ -90,25 +198,107 @@ async def generate_once(
 
         # 7) Generate
         if qtype == "mcq":
-            user = MCQ_USER.format(context=context, n=count, difficulty=difficulty)
-            payload = llm.chat_json(MCQ_SYSTEM, user, temperature=0.2, max_tokens=1200)
+            user_template = MCQ_USER  # expects `{context}`, `{n}`, `{difficulty}`
+            llm_temperature = 0.2
+            llm_max_tokens = 1600  # a bit higher helps Qwen produce multiple items
+
+            want = int(count)
+            acc: list[dict] = []
+            seen_q = set()
+            max_rounds = 3
+            round_no = 0
+
+            while len(acc) < want and round_no < max_rounds:
+                need = want - len(acc)
+                user = user_template.format(context=context, n=need, difficulty=difficulty)
+                payload = llm.chat_json(MCQ_SYSTEM, user, temperature=llm_temperature, max_tokens=llm_max_tokens)
+
+                # --- normalize model output BEFORE Pydantic ---
+                items = payload.get("items", []) if isinstance(payload, dict) else []
+                norm_items = []
+                for it in items:
+                    it = dict(it)
+
+                    # normalize bloom & difficulty
+                    it["bloom"] = _norm_bloom(it.get("bloom"))
+                    it["difficulty"] = _norm_difficulty(it.get("difficulty"))
+
+                    # clean options & coerce answer_index
+                    if "options" in it and isinstance(it["options"], list):
+                        it["options"] = _sanitize_option_texts(it["options"])
+
+                    ai = _norm_answer_index(it)
+                    if ai is not None:
+                        it["answer_index"] = ai
+
+                    # basic shape checks
+                    q = (it.get("question") or "").strip()
+                    opts = it.get("options") or []
+                    ai = it.get("answer_index", None)
+
+                    if not q or len(opts) < 2:
+                        continue
+
+                    # ensure exactly 4 options by padding with plausible distractors
+                    if len(opts) < 4:
+                        base = set(o.strip() for o in opts if isinstance(o, str))
+                        while len(opts) < 4:
+                            candidate = f"None of the other choices {len(opts)}"
+                            if candidate not in base:
+                                opts.append(candidate)
+                                base.add(candidate)
+                        it["options"] = opts[:4]
+
+                    # keep only valid 0..3 index
+                    if isinstance(ai, int) and 0 <= ai < 4:
+                        qkey = q.lower()
+                        if qkey not in seen_q:
+                            seen_q.add(qkey)
+                            norm_items.append(it)
+
+                acc.extend(norm_items)
+                round_no += 1
+
+            # if still short, trim or raise
+            if not acc:
+                raise HTTPException(500, "Model returned no valid MCQs; try a smaller context or easier difficulty.")
+
+            payload = {"items": acc[:want]}
             batch = MCQBatch(**payload)  # validate
-            # structural check
+
+            # structural check (keep this)
             for it in batch.items:
                 if not (0 <= it.answer_index < 4 and len(it.options) == 4):
                     raise HTTPException(500, "Invalid MCQ structure from model.")
-            result = batch.model_dump()
-        else:
-            user = ESSAY_USER.format(context=context, n=count)
-            payload = llm.chat_json(ESSAY_SYSTEM, user, temperature=0.4, max_tokens=1200)
 
-            # normalize difficulty values returned by the model
-            for it in payload.get("items", []):
-                d = it.get("difficulty")
-                if isinstance(d, str):
-                    it["difficulty"] = d.strip().lower()
+            result = batch.model_dump()
+
+
+        else:
+
+            user = ESSAY_USER.format(context=context, n=count)
+
+            payload = llm.chat_json(ESSAY_SYSTEM, user, temperature=0.4, max_tokens=1400)
+
+            # --- NORMALIZE ESSAY DIFFICULTY ---
+
+            items = payload.get("items", [])
+
+            norm_items = []
+
+            for it in items:
+                it = dict(it)
+
+                it["difficulty"] = _norm_difficulty(it.get("difficulty"))
+
+                norm_items.append(it)
+
+            payload["items"] = norm_items
+
+            # --- END NORMALIZE ---
 
             batch = EssayBatch(**payload)
+
             result = batch.model_dump()
 
         # 8) Save to disk
