@@ -4,9 +4,9 @@ from dataclasses import dataclass
 @dataclass
 class AppConfig:
     # Static backend/model selection
-    LLM_BACKEND: str = "ollama"   # "gemini" | "ollama" | "hf" | "lora"
-    #LLM_MODEL: str   = "gemini-2.0-flash" # "gemini-2.0-flash" | "Qwen/Qwen2.5-7B-Instruct" | "qwen2.5:1.5b-instruct"
-    LLM_MODEL = "qwen2.5:1.5b-instruct"
+    LLM_BACKEND: str = "gemini"   # "gemini" | "ollama" | "hf" | "lora"
+    #LLM_MODEL: str   = "qwen2.5:1.5b-instruct" # "gemini-2.0-flash" | "Qwen/Qwen2.5-7B-Instruct" | "qwen2.5:1.5b-instruct"
+    LLM_MODEL = "gemini-2.0-flash"
     # Directly put your Gemini API key here
     GEMINI_API_KEY: str = "AIzaSyAzIrDUnqNO35ZrWTnwJEb5TEXleNpX08w"
 
