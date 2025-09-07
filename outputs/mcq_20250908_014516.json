@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "question": "Which of the following is NOT a characteristic of a perfectly competitive market?",
+      "options": [
+        "Many buyers and sellers",
+        "Homogeneous products",
+        "Free entry and exit",
+        "Differentiated products"
+      ],
+      "answer_index": 3,
+      "rationale": "Perfectly competitive markets are characterized by many buyers and sellers, homogeneous products, and free entry and exit. Differentiated products are a characteristic of monopolistically competitive markets, not perfectly competitive markets. (p. 324)",
+      "source_pages": [
+        324
+      ],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What is the primary goal of firms in a competitive market?",
+      "options": [
+        "Maximize total revenue",
+        "Minimize costs",
+        "Maximize profit",
+        "Increase market share"
+      ],
+      "answer_index": 2,
+      "rationale": "The primary goal of firms in any market, including a competitive market, is to maximize profit. (p. 324)",
+      "source_pages": [
+        324
+      ],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "In a perfectly competitive market, what does the demand curve faced by an individual firm look like?",
+      "options": [
+        "Downward sloping",
+        "Perfectly inelastic",
+        "Perfectly elastic",
+        "Upward sloping"
+      ],
+      "answer_index": 2,
+      "rationale": "In a perfectly competitive market, individual firms are price takers and face a perfectly elastic demand curve. This means they can sell any quantity at the market price. (p. 325)",
+      "source_pages": [
+        325
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Which of the following is NOT a typical characteristic of cloud computing?",
+      "options": [
+        "On-demand self-service",
+        "Broad network access",
+        "Resource pooling",
+        "Single-tenant infrastructure"
+      ],
+      "answer_index": 3,
+      "rationale": "Cloud computing typically involves multi-tenant infrastructure where resources are shared among multiple users. Single-tenant infrastructure, where resources are dedicated to a single user, is not a typical characteristic. (pg. 4)",
+      "source_pages": [
+        4
+      ],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What is the primary benefit of 'on-demand self-service' in cloud computing?",
+      "options": [
+        "Users can provision resources automatically without requiring human interaction.",
+        "Cloud providers manage all resource allocation.",
+        "It reduces the need for network access.",
+        "It eliminates the need for resource pooling."
+      ],
+      "answer_index": 0,
+      "rationale": "On-demand self-service allows users to provision computing resources such as servers and network storage as needed automatically, without requiring interaction with cloud provider personnel. (pg. 4)",
+      "source_pages": [
+        4
+      ],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    }
+  ]
+}

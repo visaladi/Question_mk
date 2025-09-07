@@ -1,8 +1,6 @@
-# main.py
-import os, json, tempfile, datetime
-from typing import Optional, Literal
+import os, json, tempfile, datetime, uvicorn, time, re, mlflow
+from typing import Literal
 from fastapi.responses import FileResponse, Response
-import uvicorn
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -14,11 +12,11 @@ from core.pdf_utils import extract_pages, chunk_pages
 from core.embed_store import EmbedStore
 from core.schemas import MCQBatch, EssayBatch
 from core.llm_client import LLMClient
-from core.prompts import MCQ_SYSTEM, MCQ_USER, ESSAY_SYSTEM, ESSAY_USER
+from core.prompts import MCQ_SYSTEM, ESSAY_SYSTEM
 from pathlib import Path
-import re
+from core.tracking import start_run, log_params, log_metrics, log_text, log_json, log_artifact
 
-# Optional extras (safe import)
+
 try:
     from extras.rerank import Reranker
 except Exception:
@@ -169,161 +167,193 @@ async def generate_once(
         tf.write(await pdf.read())
         path = tf.name
 
-    try:
-        # 2) Extract + chunk
-        pages = extract_pages(path)
-        if not pages:
-            raise HTTPException(400, "No text found in the PDF.")
-        chunks = list(chunk_pages(pages, max_chars=1800, overlap=200))
-        if not chunks:
-            raise HTTPException(400, "Could not create chunks from the PDF content.")
-
-        # 3) Build in-memory embed store
-        store = EmbedStore()
-        store.build(chunks)
-
-        # 4) Retrieve and (optionally) rerank
-        ctx_snips = store.topk(topic, k=6)
-        if config.USE_RERANK and Reranker is not None:
-            reranker = Reranker()
-            ctx_snips = reranker.rerank(topic, ctx_snips, top_k=4)
-        else:
-            ctx_snips = ctx_snips[:4]
-
-        # 5) Build context with page refs
-        context = "\n\n".join([f"[pages {','.join(map(str,p))}]\n{t}" for t, p in ctx_snips])
-
-        # 6) Static model from config.py
-        llm = LLMClient(backend=config.LLM_BACKEND, model=config.LLM_MODEL)
-
-        # 7) Generate
-        if qtype == "mcq":
-            user_template = MCQ_USER  # expects `{context}`, `{n}`, `{difficulty}`
-            llm_temperature = 0.2
-            llm_max_tokens = 1600  # a bit higher helps Qwen produce multiple items
-
-            want = int(count)
-            acc: list[dict] = []
-            seen_q = set()
-            max_rounds = 3
-            round_no = 0
-
-            while len(acc) < want and round_no < max_rounds:
-                need = want - len(acc)
-                user = user_template.format(context=context, n=need, difficulty=difficulty)
-                payload = llm.chat_json(MCQ_SYSTEM, user, temperature=llm_temperature, max_tokens=llm_max_tokens)
-
-                # --- normalize model output BEFORE Pydantic ---
-                items = payload.get("items", []) if isinstance(payload, dict) else []
-                norm_items = []
-                for it in items:
-                    it = dict(it)
-
-                    # normalize bloom & difficulty
-                    it["bloom"] = _norm_bloom(it.get("bloom"))
-                    it["difficulty"] = _norm_difficulty(it.get("difficulty"))
-
-                    # clean options & coerce answer_index
-                    if "options" in it and isinstance(it["options"], list):
-                        it["options"] = _sanitize_option_texts(it["options"])
-
-                    ai = _norm_answer_index(it)
-                    if ai is not None:
-                        it["answer_index"] = ai
-
-                    # basic shape checks
-                    q = (it.get("question") or "").strip()
-                    opts = it.get("options") or []
-                    ai = it.get("answer_index", None)
-
-                    if not q or len(opts) < 2:
-                        continue
-
-                    # ensure exactly 4 options by padding with plausible distractors
-                    if len(opts) < 4:
-                        base = set(o.strip() for o in opts if isinstance(o, str))
-                        while len(opts) < 4:
-                            candidate = f"None of the other choices {len(opts)}"
-                            if candidate not in base:
-                                opts.append(candidate)
-                                base.add(candidate)
-                        it["options"] = opts[:4]
-
-                    # keep only valid 0..3 index
-                    if isinstance(ai, int) and 0 <= ai < 4:
-                        qkey = q.lower()
-                        if qkey not in seen_q:
-                            seen_q.add(qkey)
-                            norm_items.append(it)
-
-                acc.extend(norm_items)
-                round_no += 1
-
-            # if still short, trim or raise
-            if not acc:
-                raise HTTPException(500, "Model returned no valid MCQs; try a smaller context or easier difficulty.")
-
-            payload = {"items": acc[:want]}
-            batch = MCQBatch(**payload)  # validate
-
-            # structural check (keep this)
-            for it in batch.items:
-                if not (0 <= it.answer_index < 4 and len(it.options) == 4):
-                    raise HTTPException(500, "Invalid MCQ structure from model.")
-
-            result = batch.model_dump()
-
-
-        else:
-
-            user = ESSAY_USER.format(context=context, n=count)
-
-            payload = llm.chat_json(ESSAY_SYSTEM, user, temperature=0.4, max_tokens=1400)
-
-            # --- NORMALIZE ESSAY DIFFICULTY ---
-
-            items = payload.get("items", [])
-
-            norm_items = []
-
-            for it in items:
-                it = dict(it)
-
-                it["difficulty"] = _norm_difficulty(it.get("difficulty"))
-
-                norm_items.append(it)
-
-            payload["items"] = norm_items
-
-            # --- END NORMALIZE ---
-
-            batch = EssayBatch(**payload)
-
-            result = batch.model_dump()
-
-        # 8) Save to disk
-        os.makedirs("outputs", exist_ok=True)
-        ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        out_path = f"outputs/{qtype}_{ts}.json"
-        with open(out_path, "w", encoding="utf-8") as f:
-            json.dump(result, f, indent=2, ensure_ascii=False)
-
-        return {
-            "status": "success",
-            "qtype": qtype,
-            "difficulty": difficulty,
-            "count": count,
-            "model": {"backend": config.LLM_BACKEND, "name": config.LLM_MODEL},
-            "saved_to": out_path,
-            "data": result,
-        }
-
-    finally:
-        # Clean temp file
         try:
-            os.unlink(path)
-        except Exception:
-            pass
+            run_name = f"{qtype}_{difficulty}_{count}"
+            with start_run(run_name, tags={
+                "endpoint": "/generate_once",
+                "model_backend": config.LLM_BACKEND,
+                "model_name": config.LLM_MODEL,
+            }):
+                t_extract = time.time()
+                pages = extract_pages(path)
+                if not pages:
+                    raise HTTPException(400, "No text found in the PDF.")
+                chunks = list(chunk_pages(pages, max_chars=1800, overlap=200))  
+                if not chunks:
+                    raise HTTPException(400, "Could not create chunks from the PDF content.")
+                
+                log_params({
+                    "qtype": qtype,
+                    "difficulty": difficulty,
+                    "count": count,
+                    "topic": topic,
+                    "pages": len(pages),
+                    "chunks": len(chunks),
+                    "backend": config.LLM_BACKEND,
+                    "model": config.LLM_MODEL,
+                })
+                log_metrics({"t_extract_sec": time.time() - t_extract})
+
+                # build embed store + retrieve
+                t_ret = time.time()
+                store = EmbedStore()
+                store.build(chunks)
+                ctx_snips = store.topk(topic, k=6)
+                if config.USE_RERANK and Reranker is not None:
+                    reranker = Reranker()
+                    ctx_snips = reranker.rerank(topic, ctx_snips, top_k=4)
+                else:
+                    ctx_snips = ctx_snips[:4]
+
+                log_metrics({"t_retrieve_sec": time.time() - t_ret})
+                log_text("\n\n".join([s[0] for s in ctx_snips]), "artifacts/context_snippets.txt")
+
+                # build context
+                context = "\n\n".join([f"[pages {','.join(map(str,p))}]\n{t}" for t, p in ctx_snips])
+
+                # LLM call
+                t_llm = time.time()
+                llm = LLMClient(backend=config.LLM_BACKEND, model=config.LLM_MODEL)
+
+                # 7) Generate
+                if qtype == "mcq":
+                    user_template = mlflow.genai.load_prompt("prompts:/quiz-generator-mcq/1")
+                    llm_temperature = 0.2
+                    llm_max_tokens = 1600  # a bit higher helps Qwen produce multiple items
+
+                    want = int(count)
+                    acc: list[dict] = []
+                    seen_q = set()
+                    max_rounds = 3
+                    round_no = 0
+
+                    while len(acc) < want and round_no < max_rounds:
+                        need = want - len(acc)
+                        user = user_template.format(context=context, n=need, difficulty=difficulty)
+
+                        # call LLM API
+                        payload = llm.chat_json(MCQ_SYSTEM, user, temperature=llm_temperature, max_tokens=llm_max_tokens)
+
+                        # --- normalize model output BEFORE Pydantic ---
+                        items = payload.get("items", []) if isinstance(payload, dict) else []
+                        norm_items = []
+                        for it in items:
+                            it = dict(it)
+
+                            # normalize bloom & difficulty
+                            it["bloom"] = _norm_bloom(it.get("bloom"))
+                            it["difficulty"] = _norm_difficulty(it.get("difficulty"))
+
+                            # clean options & coerce answer_index
+                            if "options" in it and isinstance(it["options"], list):
+                                it["options"] = _sanitize_option_texts(it["options"])
+
+                            ai = _norm_answer_index(it)
+                            if ai is not None:
+                                it["answer_index"] = ai
+
+                            # basic shape checks
+                            q = (it.get("question") or "").strip()
+                            opts = it.get("options") or []
+                            ai = it.get("answer_index", None)
+
+                            if not q or len(opts) < 2:
+                                continue
+
+                            # ensure exactly 4 options by padding with plausible distractors
+                            if len(opts) < 4:
+                                base = set(o.strip() for o in opts if isinstance(o, str))
+                                while len(opts) < 4:
+                                    candidate = f"None of the other choices {len(opts)}"
+                                    if candidate not in base:
+                                        opts.append(candidate)
+                                        base.add(candidate)
+                                it["options"] = opts[:4]
+
+                            # keep only valid 0..3 index
+                            if isinstance(ai, int) and 0 <= ai < 4:
+                                qkey = q.lower()
+                                if qkey not in seen_q:
+                                    seen_q.add(qkey)
+                                    norm_items.append(it)
+
+                        acc.extend(norm_items)
+                        round_no += 1
+
+                    # if still short, trim or raise
+                    if not acc:
+                        raise HTTPException(500, "Model returned no valid MCQs; try a smaller context or easier difficulty.")
+
+                    payload = {"items": acc[:want]}
+                    batch = MCQBatch(**payload)  # validate
+
+                    # structural check (keep this)
+                    for it in batch.items:
+                        if not (0 <= it.answer_index < 4 and len(it.options) == 4):
+                            raise HTTPException(500, "Invalid MCQ structure from model.")
+
+                    result = batch.model_dump()
+                    json_ok = 1
+                    n_items =  len(result.get("items", []))
+
+                else:
+
+                    user_template = mlflow.genai.load_prompt("prompts:/quiz-generator-essay/2")
+                    user = user_template.format(context=context, n=count, difficulty=difficulty)
+
+                    payload = llm.chat_json(ESSAY_SYSTEM, user, temperature=0.4, max_tokens=1400)
+
+                    # --- NORMALIZE ESSAY DIFFICULTY ---
+
+                    items = payload.get("items", [])
+
+                    norm_items = []
+
+                    for it in items:
+                        it = dict(it)
+
+                        it["difficulty"] = _norm_difficulty(it.get("difficulty"))
+
+                        norm_items.append(it)
+
+                    payload["items"] = norm_items
+
+                    # --- END NORMALIZE ---
+
+                    batch = EssayBatch(**payload)
+
+                    result = batch.model_dump()
+                    json_ok = 1
+                    n_items = len(result.get("items", []))
+
+                # 8) Save to disk
+                os.makedirs("outputs", exist_ok=True)
+                ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                out_path = f"outputs/{qtype}_{ts}.json"
+                with open(out_path, "w", encoding="utf-8") as f:
+                    json.dump(result, f, indent=2, ensure_ascii=False)
+                # log artifacts
+                log_artifact(out_path, artifact_subdir="artifacts")
+                # (optional) log normalized output separately
+                log_json(result, "artifacts/result.json")
+
+                return {
+                    "status": "success",
+                    "qtype": qtype,
+                    "difficulty": difficulty,
+                    "count": count,
+                    "model": {"backend": config.LLM_BACKEND, "name": config.LLM_MODEL},
+                    "saved_to": out_path,
+                    "data": result,
+                }
+
+        finally:
+            # Clean temp file
+            try:
+                os.unlink(path)
+            except Exception:
+                pass
+
 @app.get("/")
 def home(request: Request):
     return templates.TemplateResponse(

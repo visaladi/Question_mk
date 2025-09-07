@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "question": "How might different cultural perspectives influence the interpretation and application of ethical guidelines in artificial intelligence?",
+      "difficulty": "medium",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Demonstrates a comprehensive understanding of how cultural values shape ethical frameworks.",
+        "Analyzes the potential conflicts arising from differing cultural interpretations of ethical principles.",
+        "Evaluates the effectiveness of current ethical guidelines in addressing diverse cultural contexts.",
+        "Provides specific examples of cultural nuances impacting AI ethics.",
+        "Offers insightful recommendations for creating culturally sensitive AI ethics guidelines."
+      ],
+      "target_keywords": [
+        "cultural perspectives",
+        "ethical guidelines",
+        "artificial intelligence",
+        "interpretation",
+        "application"
+      ],
+      "source_pages": []
+    },
+    {
+      "question": "In what ways could the integration of blockchain technology revolutionize supply chain management, and what are the potential drawbacks?",
+      "difficulty": "medium",
+      "bloom": "Analyze",
+      "rubric_bullets": [
+        "Identifies and explains multiple ways blockchain can transform supply chain processes.",
+        "Analyzes the benefits of blockchain, such as increased transparency and security.",
+        "Evaluates the potential challenges and limitations of implementing blockchain in supply chains.",
+        "Compares and contrasts blockchain with traditional supply chain management systems.",
+        "Provides a balanced assessment of the opportunities and risks associated with blockchain adoption."
+      ],
+      "target_keywords": [
+        "blockchain technology",
+        "supply chain management",
+        "integration",
+        "revolutionize",
+        "drawbacks"
+      ],
+      "source_pages": []
+    },
+    {
+      "question": "How can personalized learning experiences be designed to effectively cater to diverse learning styles and abilities in a classroom setting?",
+      "difficulty": "medium",
+      "bloom": "Apply",
+      "rubric_bullets": [
+        "Demonstrates an understanding of various learning styles and their characteristics.",
+        "Applies principles of personalized learning to create tailored learning activities.",
+        "Addresses the challenges of accommodating diverse abilities in a classroom environment.",
+        "Provides practical strategies for implementing personalized learning in a real-world setting.",
+        "Offers a clear and well-reasoned approach to designing effective personalized learning experiences."
+      ],
+      "target_keywords": [
+        "personalized learning",
+        "learning styles",
+        "abilities",
+        "classroom setting",
+        "design"
+      ],
+      "source_pages": []
+    }
+  ]
+}

@@ -23,9 +23,11 @@ ESSAY_SYSTEM = "You create open-ended questions grounded ONLY in the context."
 ESSAY_USER = """Context:
 {context}
 
-
 Task:
-Create {n} open-ended questions with Bloom, difficulty, target_keywords, rubric_bullets, source_pages.
+Create {n} open-ended questions with 
+- Bloom
+- Difficulty: {difficulty}
+- target_keywords, rubric_bullets, source_pages.
 Return JSON:
 {{
 "items":[{{
@@ -34,3 +36,5 @@ Return JSON:
 }}]
 }}
 """
+
+

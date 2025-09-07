@@ -1,5 +1,6 @@
 # config.py
 from dataclasses import dataclass
+import os
 
 @dataclass
 class AppConfig:
@@ -9,8 +10,8 @@ class AppConfig:
     LLM_MODEL = "gemini-2.0-flash"
     # Directly put your Gemini API key here
     # Gemini API key is now loaded from environment variable
-    import os
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    OLLAMA_URL: str = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
     # Reranker toggle (optional)
     USE_RERANK: bool = False

@@ -20,3 +20,7 @@ extras/__pycache__/
 *.tmp
 *.log
 *.DS_Store
+
+# MLflow tracking
+mlruns/
+mlartifacts/
