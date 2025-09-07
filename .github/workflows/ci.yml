@@ -61,7 +61,7 @@ jobs:
           MLFLOW_TRACKING_URI: mlruns
           MLFLOW_EXPERIMENT: ci_quick
         run: |
-          pytest -q
+          python -m pytest tests/
 
   test-gemini:
     name: Test (Gemini)
@@ -85,7 +85,7 @@ jobs:
         env:
           LLM_PROVIDER: gemini
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: pytest -q
+        run: python -m pytest tests/
 
   build-and-push:
     name: Build & Push Image
