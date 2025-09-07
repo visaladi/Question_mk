@@ -1,5 +1,7 @@
 # Environment variables
 .env
+.env.gemini
+.env.ollama
 
 # Python cache and IDE files
 __pycache__/
