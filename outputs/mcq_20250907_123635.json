@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "question": "What is the dimension of the noise vector used in the configuration?",
+      "options": [
+        "10",
+        "28",
+        "32",
+        "80"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration specifies `noise_dim = 10`, indicating that the noise vector has a dimension of 10.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "If CUDA is available, which device will be used according to the configuration?",
+      "options": [
+        "CPU",
+        "GPU",
+        "cuda",
+        "Both CPU and GPU"
+      ],
+      "answer_index": 2,
+      "rationale": "The configuration uses `torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")`. This means if CUDA is available, the device will be set to 'cuda'.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the learning rate specified in the configuration?",
+      "options": [
+        "01",
+        "001",
+        "0001",
+        "00001"
+      ],
+      "answer_index": 2,
+      "rationale": "The configuration sets `lr = 0.0001`, which defines the learning rate.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "How many epochs are set for training in the configuration?",
+      "options": [
+        "10",
+        "32",
+        "28",
+        "80"
+      ],
+      "answer_index": 3,
+      "rationale": "The configuration specifies `epochs = 80`, indicating that the model will be trained for 80 epochs.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the dimension of the image according to the configuration?",
+      "options": [
+        "10",
+        "32",
+        "28 * 28",
+        "80"
+      ],
+      "answer_index": 2,
+      "rationale": "The configuration sets `image_dim = 28 * 28`, which defines the dimension of the image.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    }
+  ]
+}
