@@ -19,9 +19,6 @@ jobs:
         image: ollama/ollama:latest
         ports:
           - 11434:11434
-        options: >-
-          --health-cmd="curl -s http://localhost:11434/api/tags || exit 1"
-          --health-interval=10s --health-timeout=5s --health-retries=30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,6 +41,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest
+      
+      - name: Wait for Ollama to be ready (max ~2min)
+        run: |
+          for i in {1..24}; do
+            if curl -fsS http://localhost:11434/api/tags >/dev/null; then
+              echo "Ollama is up"; break
+            fi
+            echo "Waiting for Ollama ($i/24)..."
+            sleep 5
+          done
+          curl -fsS http://localhost:11434/api/tags
 
       - name: Pull a small Ollama model for CI
         # choose a tiny model to keep CI fast; change if you prefer
