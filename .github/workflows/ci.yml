@@ -66,37 +66,26 @@ jobs:
   test-gemini:
     name: Test (Gemini)
     runs-on: ubuntu-latest
-    # Only run if a key is configured in repo/environment secrets
-    if: ${{ secrets.GEMINI_API_KEY != '' }}
     steps:
+      - name: Check for Gemini key
+        run: |
+          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
+            echo "No GEMINI_API_KEY set, skipping..."
+            exit 0
+          fi
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: pip-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('requirements.txt') }}
-
       - name: Install deps
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest
-
+        run: pip install -r requirements.txt pytest
       - name: Run tests (Gemini)
         env:
           LLM_PROVIDER: gemini
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          MLFLOW_TRACKING_URI: mlruns
-          MLFLOW_EXPERIMENT: ci_quick
-        run: |
-          pytest -q
+        run: pytest -q
 
   build-and-push:
     name: Build & Push Image
