@@ -1,0 +1,88 @@
+{
+  "items": [
+    {
+      "question": "Which of the following best describes the primary goal of adversarial machine learning?",
+      "options": [
+        "To improve the accuracy of machine learning models on noisy datasets.",
+        "To develop machine learning models that are resistant to adversarial attacks.",
+        "To understand and exploit vulnerabilities in machine learning models.",
+        "To create more efficient algorithms for training machine learning models."
+      ],
+      "answer_index": 2,
+      "rationale": "Adversarial machine learning focuses on understanding and exploiting vulnerabilities in machine learning models, often by crafting inputs designed to cause the model to make mistakes.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the main purpose of an adversarial attack in the context of machine learning?",
+      "options": [
+        "To improve the model's generalization ability.",
+        "To cause the machine learning model to make incorrect predictions.",
+        "To reduce the computational cost of training the model.",
+        "To enhance the model's robustness to noisy data."
+      ],
+      "answer_index": 1,
+      "rationale": "The primary goal of an adversarial attack is to intentionally cause a machine learning model to produce incorrect or unintended outputs.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which of the following is a common technique used in adversarial attacks?",
+      "options": [
+        "Data augmentation",
+        "Gradient descent",
+        "Input perturbation",
+        "Cross-validation"
+      ],
+      "answer_index": 2,
+      "rationale": "Input perturbation, which involves making small, carefully crafted changes to the input data, is a common technique used to fool machine learning models in adversarial attacks.",
+      "source_pages": [],
+      "bloom": "Remember",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What is the main purpose of crafting adversarial examples in the context of machine learning?",
+      "options": [
+        "To improve the generalization ability of machine learning models.",
+        "To identify and exploit vulnerabilities in machine learning models.",
+        "To reduce the computational cost of training machine learning models.",
+        "To enhance the interpretability of machine learning models."
+      ],
+      "answer_index": 1,
+      "rationale": "Adversarial examples are specifically designed to expose and exploit weaknesses in machine learning models, revealing how they can be fooled or manipulated.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Which of the following is a common technique used to generate adversarial examples?",
+      "options": [
+        "Data augmentation",
+        "Gradient descent",
+        "Regularization",
+        "Cross-validation"
+      ],
+      "answer_index": 1,
+      "rationale": "Gradient descent, particularly techniques like the Fast Gradient Sign Method (FGSM), is frequently used to create adversarial examples by making small, targeted perturbations to input data.",
+      "source_pages": [],
+      "bloom": "Remember",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which of the following best describes the primary goal of adversarial attacks in the context of machine learning?",
+      "options": [
+        "To improve the robustness and generalization of machine learning models.",
+        "To identify and fix bugs in the training data used for machine learning.",
+        "To intentionally cause machine learning models to make incorrect predictions.",
+        "To optimize the performance of machine learning models on specific datasets."
+      ],
+      "answer_index": 2,
+      "rationale": "Adversarial attacks are designed to fool machine learning models into making mistakes by carefully crafting inputs that the model misclassifies.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    }
+  ]
+}

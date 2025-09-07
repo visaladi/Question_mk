@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "question": "How does the concept of 'confirmation bias' affect the interpretation of evidence, and what strategies can be employed to mitigate its influence on decision-making?",
+      "difficulty": "hard",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Demonstrates a thorough understanding of confirmation bias.",
+        "Explains how confirmation bias distorts evidence interpretation.",
+        "Identifies and explains effective strategies to reduce confirmation bias.",
+        "Provides clear and logical reasoning.",
+        "Offers practical examples to support the analysis."
+      ],
+      "target_keywords": [
+        "confirmation bias",
+        "evidence interpretation",
+        "mitigation strategies",
+        "decision-making"
+      ],
+      "source_pages": [
+        1
+      ]
+    }
+  ]
+}

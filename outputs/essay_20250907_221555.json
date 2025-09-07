@@ -1,0 +1,69 @@
+{
+  "items": [
+    {
+      "question": "How does the concept of 'attention' relate to the 'bottleneck' of information processing, and what are the implications of this relationship for cognitive performance?",
+      "difficulty": "medium",
+      "bloom": "Analyze",
+      "rubric_bullets": [
+        "Explanation of attention as a limited resource.",
+        "Description of the bottleneck effect in information processing.",
+        "Analysis of how attention limitations affect the bottleneck.",
+        "Discussion of the consequences for cognitive tasks.",
+        "Examples illustrating the relationship."
+      ],
+      "target_keywords": [
+        "attention",
+        "bottleneck",
+        "information processing",
+        "cognitive performance"
+      ],
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "question": "Compare and contrast 'early selection' and 'late selection' models of attention. What evidence supports each model, and how do they differ in their assumptions about the processing of unattended information?",
+      "difficulty": "medium",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Clear definition of early selection and late selection.",
+        "Comparison of the stages at which selection occurs in each model.",
+        "Discussion of experimental evidence supporting each model.",
+        "Identification of the key differences in assumptions.",
+        "Critical evaluation of the strengths and weaknesses of each model."
+      ],
+      "target_keywords": [
+        "early selection",
+        "late selection",
+        "attention models",
+        "unattended information",
+        "evidence"
+      ],
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "question": "Imagine you are designing a user interface for a complex software application. How could you apply principles of 'attention' and 'resource allocation' to minimize user errors and maximize efficiency?",
+      "difficulty": "medium",
+      "bloom": "Create",
+      "rubric_bullets": [
+        "Application of attention principles to interface design.",
+        "Explanation of how resource allocation affects user performance.",
+        "Specific examples of design choices to reduce errors.",
+        "Discussion of how the design maximizes efficiency.",
+        "Consideration of user cognitive limitations."
+      ],
+      "target_keywords": [
+        "attention",
+        "resource allocation",
+        "user interface",
+        "efficiency",
+        "error minimization"
+      ],
+      "source_pages": [
+        1
+      ]
+    }
+  ]
+}

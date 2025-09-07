@@ -1,0 +1,95 @@
+{
+  "items": [
+    {
+      "question": "How might the principles of natural selection, as described on pages 45-52, be applied to explain the evolution of antibiotic resistance in bacteria? Consider the selective pressures, genetic variations, and heritability involved. ",
+      "difficulty": "medium",
+      "bloom": "Applying",
+      "rubric_bullets": [
+        "Accurately describes the principles of natural selection.",
+        "Correctly identifies the selective pressure exerted by antibiotics.",
+        "Explains how genetic variations arise in bacterial populations.",
+        "Articulates how heritability leads to the spread of resistance.",
+        "Provides a coherent and logical explanation of the evolution of antibiotic resistance."
+      ],
+      "target_keywords": [
+        "natural selection",
+        "antibiotic resistance",
+        "selective pressure",
+        "genetic variation",
+        "heritability",
+        "evolution"
+      ],
+      "source_pages": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52
+      ]
+    },
+    {
+      "question": "Based on the information presented on pages 78-85, discuss the potential ethical implications of using CRISPR technology for gene editing in humans. Consider both the potential benefits and risks, and explore different perspectives on the acceptability of altering the human genome.",
+      "difficulty": "hard",
+      "bloom": "Evaluating",
+      "rubric_bullets": [
+        "Identifies and explains potential benefits of CRISPR technology.",
+        "Identifies and explains potential risks and drawbacks of CRISPR technology.",
+        "Discusses ethical considerations related to altering the human genome.",
+        "Presents multiple perspectives on the acceptability of gene editing.",
+        "Demonstrates critical thinking and balanced judgment in evaluating the ethical implications."
+      ],
+      "target_keywords": [
+        "CRISPR",
+        "gene editing",
+        "ethical implications",
+        "benefits",
+        "risks",
+        "human genome",
+        "ethics"
+      ],
+      "source_pages": [
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+      ]
+    },
+    {
+      "question": "According to pages 22-30, how does the process of photosynthesis contribute to the global carbon cycle, and what are the potential consequences of deforestation on this cycle?",
+      "difficulty": "medium",
+      "bloom": "Analyzing",
+      "rubric_bullets": [
+        "Accurately describes the process of photosynthesis.",
+        "Explains the role of photosynthesis in removing carbon dioxide from the atmosphere.",
+        "Articulates how deforestation disrupts the carbon cycle.",
+        "Discusses the potential consequences of increased atmospheric carbon dioxide.",
+        "Demonstrates an understanding of the interconnectedness of biological processes and environmental systems."
+      ],
+      "target_keywords": [
+        "photosynthesis",
+        "carbon cycle",
+        "deforestation",
+        "global impact",
+        "environment"
+      ],
+      "source_pages": [
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ]
+    }
+  ]
+}

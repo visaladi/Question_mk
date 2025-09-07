@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from config.config import config
-from core.pdf_utils import extract_pages, chunk_pages
+from core.pdf_utils import extract_pages, chunk_pages, normalize_pages
 from core.embed_store import EmbedStore
 from core.schemas import MCQBatch, EssayBatch
 from core.llm_client import LLMClient
@@ -81,6 +81,54 @@ def _norm_difficulty(v):
         if v >= 3: return "hard"
         return "medium"
     return "medium"
+
+
+def _norm_source_pages(v):
+    """
+    Normalize source_pages to List[int]. Handles:
+      - List of ints: [1, 2, 3]
+      - List of strings: ['1', '2', '3'] or ['1-3', '5-7']
+      - String ranges: '1-3' -> [1, 2, 3]
+      - Single values: '5' -> [5]
+    """
+    if not v:
+        return []
+    
+    if isinstance(v, (int, float)):
+        return [int(v)]
+    
+    if isinstance(v, str):
+        pages = []
+        # Split by comma first
+        parts = [p.strip() for p in v.split(',')]
+        for part in parts:
+            if '-' in part:
+                # Handle ranges like '67-70'
+                try:
+                    start, end = part.split('-', 1)
+                    start_page = int(start.strip())
+                    end_page = int(end.strip())
+                    pages.extend(range(start_page, end_page + 1))
+                except ValueError:
+                    # If parsing fails, try to extract numbers
+                    import re
+                    nums = re.findall(r'\d+', part)
+                    pages.extend([int(n) for n in nums])
+            else:
+                # Single page
+                try:
+                    pages.append(int(part))
+                except ValueError:
+                    pass
+        return pages
+    
+    if isinstance(v, list):
+        pages = []
+        for item in v:
+            pages.extend(_norm_source_pages(item))
+        return pages
+    
+    return []
 
 
 def _norm_answer_index(item):
@@ -217,7 +265,7 @@ async def generate_once(
 
                 # 7) Generate
                 if qtype == "mcq":
-                    user_template = mlflow.genai.load_prompt("prompts:/quiz-generator-mcq/1")
+                    user_template = mlflow.genai.load_prompt("prompts:/quiz-generator-mcq/2")
                     llm_temperature = 0.2
                     llm_max_tokens = 1600  # a bit higher helps Qwen produce multiple items
 
@@ -298,10 +346,12 @@ async def generate_once(
 
                 else:
 
-                    user_template = mlflow.genai.load_prompt("prompts:/quiz-generator-essay/2")
-                    user = user_template.format(context=context, n=count, difficulty=difficulty)
+                    user_template = mlflow.genai.load_prompt("prompts:/quiz-generator-essay/3")
+                    user = user_template.format(context=context, n=int(count), difficulty=difficulty)
 
-                    payload = llm.chat_json(ESSAY_SYSTEM, user, temperature=0.4, max_tokens=1400)
+                    # Increase max_tokens based on count to allow more questions
+                    max_tokens = min(1400 + (count * 200), 4000)  # Scale with count, max 4000
+                    payload = llm.chat_json(ESSAY_SYSTEM, user, temperature=0.4, max_tokens=max_tokens)
 
                     # --- NORMALIZE ESSAY DIFFICULTY ---
 
@@ -313,6 +363,7 @@ async def generate_once(
                         it = dict(it)
 
                         it["difficulty"] = _norm_difficulty(it.get("difficulty"))
+                        it["source_pages"] = _norm_source_pages(it.get("source_pages", []))
 
                         norm_items.append(it)
 

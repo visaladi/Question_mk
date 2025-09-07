@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "question": "How might the principles of natural selection, as described on page 42, be applied to explain the evolution of antibiotic resistance in bacteria?",
+      "difficulty": "medium",
+      "bloom": "Applying",
+      "rubric_bullets": [
+        "Explanation of natural selection principles.",
+        "Application of principles to antibiotic resistance.",
+        "Discussion of bacterial evolution.",
+        "Accuracy of scientific concepts."
+      ],
+      "target_keywords": [
+        "natural selection",
+        "antibiotic resistance",
+        "evolution",
+        "bacteria"
+      ],
+      "source_pages": [
+        42
+      ]
+    },
+    {
+      "question": "Considering the information on pages 67-70, what are the potential ethical implications of using CRISPR technology for gene editing in humans, and how should society address these concerns?",
+      "difficulty": "hard",
+      "bloom": "Evaluating",
+      "rubric_bullets": [
+        "Identification of ethical implications.",
+        "Discussion of societal concerns.",
+        "Proposed solutions or considerations.",
+        "Depth of ethical analysis."
+      ],
+      "target_keywords": [
+        "CRISPR",
+        "gene editing",
+        "ethics",
+        "human genome"
+      ],
+      "source_pages": [
+        67,
+        68,
+        69,
+        70
+      ]
+    },
+    {
+      "question": "Based on the information presented on page 23, how does the concept of homeostasis contribute to the survival of organisms in changing environments?",
+      "difficulty": "medium",
+      "bloom": "Understanding",
+      "rubric_bullets": [
+        "Definition of homeostasis.",
+        "Explanation of its role in survival.",
+        "Examples of homeostasis in different environments.",
+        "Clarity of explanation."
+      ],
+      "target_keywords": [
+        "homeostasis",
+        "survival",
+        "organisms",
+        "environment"
+      ],
+      "source_pages": [
+        23
+      ]
+    }
+  ]
+}
