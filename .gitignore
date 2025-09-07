@@ -1,0 +1,21 @@
+# Environment variables
+.env
+
+# Python cache and IDE files
+__pycache__/
+.idea/
+.vscode/
+config/__pycache__/
+core/__pycache__/
+extras/__pycache__/
+.idea/
+.vscode/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+*.DS_Store

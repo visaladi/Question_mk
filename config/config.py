@@ -8,7 +8,9 @@ class AppConfig:
     #LLM_MODEL: str   = "qwen2.5:1.5b-instruct" # "gemini-2.0-flash" | "Qwen/Qwen2.5-7B-Instruct" | "qwen2.5:1.5b-instruct"
     LLM_MODEL = "gemini-2.0-flash"
     # Directly put your Gemini API key here
-    GEMINI_API_KEY: str = "AIzaSyAzIrDUnqNO35ZrWTnwJEb5TEXleNpX08w"
+    # Gemini API key is now loaded from environment variable
+    import os
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
 
     # Reranker toggle (optional)
     USE_RERANK: bool = False
