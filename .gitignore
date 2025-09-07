@@ -6,6 +6,7 @@ __pycache__/
 .idea/
 .vscode/
 config/__pycache__/
+tests/__pycache__/
 core/__pycache__/
 extras/__pycache__/
 .idea/
