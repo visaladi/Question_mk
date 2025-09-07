@@ -23,7 +23,7 @@ jobs:
           pip install pytest
       - name: Run unit tests
         run: |
-          pytest tests/
+          python -m pytest tests/
       - name: Build Docker image
         run: |
           docker build -t questionmk:latest .
