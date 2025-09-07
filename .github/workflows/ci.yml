@@ -56,9 +56,7 @@ jobs:
       - name: Pull a small Ollama model for CI
         # choose a tiny model to keep CI fast; change if you prefer
         run: |
-          curl -s http://localhost:11434/api/pull -d '{"name":"qwen2.5:7b-instruct"}' || \
-          curl -s http://localhost:11434/api/pull -d '{"name":"qwen2.5:1.5b-instruct"}' || \
-          curl -s http://localhost:11434/api/pull -d '{"name":"deepseek-r1:latest"}'
+          curl -s http://localhost:11434/api/pull -d '{"name":"qwen2.5:7b-instruct"}' 
         shell: bash
 
       - name: Run tests (Ollama)
