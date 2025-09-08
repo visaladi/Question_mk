@@ -1,5 +1,7 @@
 # Environment variables
 .env
+.env.gemini
+.env.ollama
 
 # Python cache and IDE files
 __pycache__/
@@ -20,3 +22,7 @@ extras/__pycache__/
 *.tmp
 *.log
 *.DS_Store
+
+# MLflow tracking
+mlruns/
+mlartifacts/

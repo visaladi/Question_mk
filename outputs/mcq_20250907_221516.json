@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "question": "Which of the following best describes the primary goal of adversarial machine learning?",
+      "options": [
+        "To improve the accuracy of machine learning models on clean data.",
+        "To develop machine learning models that are resistant to adversarial attacks.",
+        "To understand the vulnerabilities of machine learning models and exploit them.",
+        "To create more efficient algorithms for training machine learning models."
+      ],
+      "answer_index": 2,
+      "rationale": "The primary goal of adversarial machine learning is to understand the vulnerabilities of machine learning models and exploit them, often to improve the robustness of these models.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the main purpose of crafting adversarial examples in the context of machine learning?",
+      "options": [
+        "To improve the model's generalization ability on unseen data.",
+        "To identify weaknesses and vulnerabilities in machine learning models.",
+        "To reduce the computational cost of training machine learning models.",
+        "To enhance the interpretability of machine learning models."
+      ],
+      "answer_index": 1,
+      "rationale": "Adversarial examples are specifically designed to expose weaknesses and vulnerabilities in machine learning models by causing them to make incorrect predictions.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Which of the following is a common technique used to generate adversarial examples?",
+      "options": [
+        "Data augmentation",
+        "Gradient descent",
+        "Regularization",
+        "Cross-validation"
+      ],
+      "answer_index": 1,
+      "rationale": "Gradient descent, particularly techniques like the Fast Gradient Sign Method (FGSM), is commonly used to generate adversarial examples by making small, targeted perturbations to input data.",
+      "source_pages": [],
+      "bloom": "Remember",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What is the main purpose of an adversarial attack in the context of machine learning?",
+      "options": [
+        "To improve the model's generalization ability.",
+        "To cause the machine learning model to make incorrect predictions.",
+        "To reduce the computational cost of training the model.",
+        "To enhance the model's interpretability."
+      ],
+      "answer_index": 1,
+      "rationale": "The primary goal of an adversarial attack is to intentionally cause a machine learning model to produce incorrect or unintended outputs.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which of the following is a common technique used in adversarial attacks?",
+      "options": [
+        "Data augmentation",
+        "Gradient descent",
+        "Input perturbation",
+        "Cross-validation"
+      ],
+      "answer_index": 2,
+      "rationale": "Input perturbation, which involves making small, carefully crafted changes to the input data, is a common technique used to fool machine learning models in adversarial attacks.",
+      "source_pages": [],
+      "bloom": "Remember",
+      "difficulty": "easy"
+    }
+  ]
+}

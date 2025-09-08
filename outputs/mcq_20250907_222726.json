@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "question": "Which of the following best describes the primary goal of adversarial machine learning?",
+      "options": [
+        "To improve the accuracy of machine learning models on clean data.",
+        "To develop machine learning models that are resistant to adversarial attacks.",
+        "To understand the vulnerabilities of machine learning models and exploit them.",
+        "To create more efficient algorithms for training machine learning models."
+      ],
+      "answer_index": 2,
+      "rationale": "The primary goal of adversarial machine learning is to understand the vulnerabilities of machine learning models and exploit them, which helps in developing more robust models.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Which of the following is the most accurate description of the role of context in communication?",
+      "options": [
+        "Context is irrelevant as long as the message is clear.",
+        "Context only matters in formal communication settings.",
+        "Context shapes how messages are produced and interpreted.",
+        "Context is limited to the physical environment of the communication."
+      ],
+      "answer_index": 2,
+      "rationale": "Context significantly influences both the creation and understanding of messages, affecting the entire communication process.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    }
+  ]
+}

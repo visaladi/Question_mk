@@ -1,0 +1,194 @@
+{
+  "items": [
+    {
+      "question": "According to the context, what is the topic discussed?",
+      "options": [
+        "Different types of Neural Networks",
+        "Various types of Autoencoders",
+        "Applications of Deep Learning",
+        "Machine Learning Algorithms"
+      ],
+      "answer_index": 1,
+      "rationale": "The context explicitly mentions 'Various types of Autoencoders'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Based on the context, who is the presenter?",
+      "options": [
+        "Unknown",
+        "Sanjayae@bu.edu",
+        "A Deep Learning Expert",
+        "A Machine Learning Professor"
+      ],
+      "answer_index": 1,
+      "rationale": "The context mentions 'Sanjayae@bu.edu'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the primary subject of the context?",
+      "options": [
+        "Generative Adversarial Networks",
+        "Recurrent Neural Networks",
+        "Autoencoders",
+        "Convolutional Neural Networks"
+      ],
+      "answer_index": 2,
+      "rationale": "The context focuses on 'Various types of Autoencoders'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the context about?",
+      "options": [
+        "A specific type of neural network",
+        "Different types of Autoencoders",
+        "A new activation function",
+        "A specific optimization algorithm"
+      ],
+      "answer_index": 1,
+      "rationale": "The context explicitly states 'Various types of Autoencoders'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the main topic of the context?",
+      "options": [
+        "Deep Learning Architectures",
+        "Autoencoders",
+        "Reinforcement Learning",
+        "Natural Language Processing"
+      ],
+      "answer_index": 1,
+      "rationale": "The context is centered around 'Various types of Autoencoders'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "According to the context, what is being discussed?",
+      "options": [
+        "Support Vector Machines",
+        "Autoencoders",
+        "Decision Trees",
+        "K-Means Clustering"
+      ],
+      "answer_index": 1,
+      "rationale": "The context explicitly mentions 'Various types of Autoencoders'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the subject matter of the context?",
+      "options": [
+        "Clustering Algorithms",
+        "Autoencoders",
+        "Classification Algorithms",
+        "Regression Algorithms"
+      ],
+      "answer_index": 1,
+      "rationale": "The context is about 'Various types of Autoencoders'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the primary focus of the context?",
+      "options": [
+        "Different types of Neural Networks",
+        "Different types of Autoencoders",
+        "Different types of Regression Models",
+        "Different types of Classification Models"
+      ],
+      "answer_index": 1,
+      "rationale": "The context explicitly mentions 'Various types of Autoencoders'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the context primarily about?",
+      "options": [
+        "A specific type of machine learning algorithm",
+        "Different types of Autoencoders",
+        "A new optimization technique",
+        "A specific type of data preprocessing"
+      ],
+      "answer_index": 1,
+      "rationale": "The context explicitly states 'Various types of Autoencoders'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What does the context discuss?",
+      "options": [
+        "A specific type of neural network",
+        "Different types of Autoencoders",
+        "A new activation function",
+        "A specific optimization algorithm"
+      ],
+      "answer_index": 1,
+      "rationale": "The context explicitly states 'Various types of Autoencoders'.",
+      "source_pages": [
+        43,
+        43,
+        43,
+        43
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    }
+  ]
+}

@@ -44,7 +44,7 @@ class LLMClient:
 
         elif backend == "ollama":
             # Allow override via env var; default to local daemon
-            self.ollama_url = os.getenv("OLLAMA_URL", "http://localhost:11434")
+            self.ollama_url = config.OLLAMA_URL or os.getenv("OLLAMA_URL", "http://localhost:11434")
 
         else:  # hf
             from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline

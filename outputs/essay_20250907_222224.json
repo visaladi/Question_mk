@@ -1,0 +1,68 @@
+{
+  "items": [
+    {
+      "question": "How might the principles of operant conditioning, as described by Skinner, be applied to modify behavior in a classroom setting, and what ethical considerations should be taken into account when implementing such techniques?",
+      "difficulty": "medium",
+      "bloom": "Apply",
+      "rubric_bullets": [
+        "Explanation of operant conditioning principles (reinforcement, punishment).",
+        "Application of these principles to specific classroom scenarios.",
+        "Discussion of potential ethical concerns (e.g., coercion, fairness).",
+        "Consideration of long-term effects on student autonomy and motivation."
+      ],
+      "target_keywords": [
+        "operant conditioning",
+        "Skinner",
+        "behavior modification",
+        "classroom",
+        "ethics"
+      ],
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "question": "Compare and contrast classical conditioning and operant conditioning, providing examples of how each type of learning can influence everyday behaviors and attitudes.",
+      "difficulty": "medium",
+      "bloom": "Analyze",
+      "rubric_bullets": [
+        "Clear differentiation between classical and operant conditioning.",
+        "Accurate examples of each type of conditioning in everyday life.",
+        "Discussion of the roles of association and consequences in learning.",
+        "Explanation of how conditioned responses and behaviors are acquired and maintained."
+      ],
+      "target_keywords": [
+        "classical conditioning",
+        "operant conditioning",
+        "Pavlov",
+        "Skinner",
+        "behavior",
+        "attitude"
+      ],
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "question": "Evaluate the effectiveness of using punishment as a primary method of behavior modification, considering both its potential benefits and drawbacks, and propose alternative strategies that align with positive reinforcement principles.",
+      "difficulty": "medium",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Discussion of the potential short-term and long-term effects of punishment.",
+        "Analysis of the ethical implications of using punishment.",
+        "Explanation of positive reinforcement strategies and their advantages.",
+        "Comparison of the effectiveness of punishment versus positive reinforcement in achieving desired behavioral outcomes."
+      ],
+      "target_keywords": [
+        "punishment",
+        "behavior modification",
+        "reinforcement",
+        "ethical considerations",
+        "alternatives"
+      ],
+      "source_pages": [
+        1
+      ]
+    }
+  ]
+}

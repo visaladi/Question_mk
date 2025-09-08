@@ -38,3 +38,27 @@ def chunk_pages(pages: List[Tuple[int,str]], max_chars: int = 1800, overlap: int
         i += max_chars
     if buf:
         yield " ".join(buf).strip(), sorted(pages_used)
+
+def normalize_pages(pages):
+    out = []
+    for p in pages or []:
+        if isinstance(p, int):
+            out.append(p)
+        elif isinstance(p, str):
+            s = p.strip()
+            if "-" in s:
+                a, b = s.split("-", 1)
+                try:
+                    a, b = int(a), int(b)
+                    if a <= b:
+                        out.extend(range(a, b + 1))
+                    else:
+                        out.extend([a, b])  # weird order, keep both
+                except ValueError:
+                    # skip or log; string isn't a valid range
+                    continue
+            elif s.isdigit():
+                out.append(int(s))
+            # else: skip or log
+    # dedupe + sort (optional)
+    return sorted(set(out))

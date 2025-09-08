@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "question": "Which of the following best describes the primary goal of adversarial machine learning?",
+      "options": [
+        "To improve the accuracy of machine learning models on clean data.",
+        "To develop machine learning models that are resistant to adversarial attacks.",
+        "To understand the vulnerabilities of machine learning models and exploit them.",
+        "To create new machine learning algorithms that are inherently secure."
+      ],
+      "answer_index": 2,
+      "rationale": "The primary goal of adversarial machine learning is to understand the vulnerabilities of machine learning models and exploit them, which helps in developing more robust defenses.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the main purpose of an adversarial attack in the context of machine learning?",
+      "options": [
+        "To improve the model's generalization ability.",
+        "To identify and correct errors in the training dataset.",
+        "To cause a machine learning model to make incorrect predictions.",
+        "To increase the computational efficiency of machine learning algorithms."
+      ],
+      "answer_index": 2,
+      "rationale": "The main purpose of an adversarial attack is to intentionally cause a machine learning model to make incorrect predictions by feeding it carefully crafted input data.",
+      "source_pages": [],
+      "bloom": "Remember",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which of the following is NOT a common defense strategy against adversarial attacks?",
+      "options": [
+        "Adversarial training",
+        "Gradient masking",
+        "Input validation",
+        "Model compression"
+      ],
+      "answer_index": 3,
+      "rationale": "Model compression is primarily used to reduce the size and complexity of a model, not as a direct defense against adversarial attacks. Adversarial training, gradient masking, and input validation are all established defense strategies.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Which of the following is the most accurate description of the role of context in communication?",
+      "options": [
+        "Context is irrelevant as long as the message is clear.",
+        "Context only refers to the physical environment where communication takes place.",
+        "Context shapes how we interpret messages and influences communication.",
+        "Context is solely determined by the sender of the message."
+      ],
+      "answer_index": 2,
+      "rationale": "Context plays a crucial role in shaping how we interpret messages and significantly influences the communication process. It provides a framework for understanding the meaning behind words and actions.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the primary difference between verbal and nonverbal communication?",
+      "options": [
+        "Verbal communication is always intentional, while nonverbal communication is always unintentional.",
+        "Verbal communication uses spoken or written words, while nonverbal communication uses gestures, facial expressions, and other non-linguistic cues.",
+        "Verbal communication is more reliable than nonverbal communication.",
+        "Verbal communication is only used in formal settings, while nonverbal communication is used in informal settings."
+      ],
+      "answer_index": 1,
+      "rationale": "Verbal communication involves the use of language (spoken or written words), whereas nonverbal communication encompasses all other forms of communication, such as body language, facial expressions, and tone of voice.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    }
+  ]
+}

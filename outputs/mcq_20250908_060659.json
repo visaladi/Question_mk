@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "question": "Which of the following is the most accurate description of the role of a data scientist?",
+      "options": [
+        "Primarily responsible for managing and maintaining data infrastructure.",
+        "Focused on developing and deploying machine learning models to solve business problems.",
+        "Exclusively involved in collecting and cleaning data for analysis.",
+        "A generalist role encompassing data collection, analysis, and model building to drive data-informed decisions."
+      ],
+      "answer_index": 3,
+      "rationale": "A data scientist is a generalist role that encompasses data collection, analysis, and model building to drive data-informed decisions.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "A data scientist is tasked with predicting customer churn. Which of the following steps would be most crucial in ensuring the model's reliability and generalizability?",
+      "options": [
+        "Using the entire dataset to train the model for maximum accuracy.",
+        "Focusing solely on optimizing the model's performance on the training data.",
+        "Splitting the data into training, validation, and testing sets to evaluate performance on unseen data.",
+        "Ignoring outliers in the data to simplify the model and improve training speed."
+      ],
+      "answer_index": 3,
+      "rationale": "Splitting the data into training, validation, and testing sets is crucial for evaluating the model's performance on unseen data and ensuring its generalizability.",
+      "source_pages": [],
+      "bloom": "Apply",
+      "difficulty": "medium"
+    },
+    {
+      "question": "A data science team is building a model to predict fraudulent transactions. The model achieves high accuracy but fails to identify a new type of fraud that was not present in the training data. Which of the following strategies would be most effective in addressing this issue?",
+      "options": [
+        "Increasing the complexity of the model to capture more subtle patterns.",
+        "Reducing the size of the training dataset to focus on the most relevant examples.",
+        "Regularly retraining the model with new data and incorporating feedback from fraud analysts.",
+        "Ignoring the new type of fraud as it is unlikely to occur frequently."
+      ],
+      "answer_index": 2,
+      "rationale": "Regularly retraining the model with new data and incorporating feedback from fraud analysts is crucial for adapting to evolving fraud patterns and maintaining model effectiveness.",
+      "source_pages": [],
+      "bloom": "Analyze",
+      "difficulty": "hard"
+    },
+    {
+      "question": "Which of the following is NOT a requirement for the output format?",
+      "options": [
+        "Each question must have exactly 4 options.",
+        "Each question must test trivial facts.",
+        "The rationale must explain why the answer is correct.",
+        "The JSON must be valid and parseable."
+      ],
+      "answer_index": 1,
+      "rationale": "The instructions state that each question must test meaningful understanding of the material, not trivial facts.",
+      "source_pages": [],
+      "bloom": "Remember",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which of the following tasks is least likely to be performed by a data scientist?",
+      "options": [
+        "Building predictive models to forecast future trends.",
+        "Designing and implementing A/B tests to optimize marketing campaigns.",
+        "Developing and maintaining the company's IT infrastructure.",
+        "Analyzing customer data to identify patterns and segments."
+      ],
+      "answer_index": 2,
+      "rationale": "Maintaining IT infrastructure is typically the responsibility of IT professionals, not data scientists.",
+      "source_pages": [],
+      "bloom": "Apply",
+      "difficulty": "medium"
+    }
+  ]
+}

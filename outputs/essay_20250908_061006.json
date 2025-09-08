@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "question": "Explain the significance of the Battle of Actium in shaping the political landscape of the Roman Empire. How did Octavian's victory contribute to the transition from the Roman Republic to the Roman Empire, and what were the key factors that allowed him to consolidate power?",
+      "difficulty": "hard",
+      "bloom": "Analyze",
+      "rubric_bullets": [
+        "Discusses the military and strategic importance of the Battle of Actium.",
+        "Explains how Octavian's victory led to the decline of the Roman Republic.",
+        "Identifies and analyzes the key factors that allowed Octavian to consolidate power.",
+        "Provides a comprehensive overview of the political changes that occurred during the transition from Republic to Empire.",
+        "Demonstrates a clear understanding of the historical context and significance of the events."
+      ],
+      "target_keywords": [
+        "Battle of Actium",
+        "Octavian",
+        "Roman Republic",
+        "Roman Empire",
+        "Consolidation of Power",
+        "Political Landscape"
+      ],
+      "source_pages": []
+    },
+    {
+      "question": "Compare and contrast the political structures and social dynamics of the Roman Republic and the Roman Empire. In what ways did the shift from Republic to Empire alter the distribution of power, the role of the Senate, and the lives of ordinary citizens?",
+      "difficulty": "hard",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Clearly outlines the key differences and similarities between the Roman Republic and the Roman Empire.",
+        "Analyzes the changes in political structures, such as the role of the Senate and the concentration of power in the hands of the emperor.",
+        "Discusses the impact of the transition on different social classes and the lives of ordinary citizens.",
+        "Provides specific examples to support the comparison and contrast.",
+        "Demonstrates a nuanced understanding of the complexities of Roman history."
+      ],
+      "target_keywords": [
+        "Roman Republic",
+        "Roman Empire",
+        "Political Structures",
+        "Social Dynamics",
+        "Senate",
+        "Distribution of Power"
+      ],
+      "source_pages": []
+    },
+    {
+      "question": "Assess the long-term impact of Roman legal and administrative systems on subsequent civilizations. How did Roman law influence the development of legal systems in Europe and beyond, and what aspects of Roman administration were adopted or adapted by later empires and states?",
+      "difficulty": "hard",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Identifies and explains the key principles of Roman law that have had a lasting impact.",
+        "Provides specific examples of how Roman law influenced the development of legal systems in different regions.",
+        "Analyzes the aspects of Roman administration that were adopted or adapted by later empires and states.",
+        "Discusses the reasons why Roman legal and administrative systems were so influential.",
+        "Demonstrates a comprehensive understanding of the historical legacy of Rome."
+      ],
+      "target_keywords": [
+        "Roman Law",
+        "Administrative Systems",
+        "Influence",
+        "Legal Systems",
+        "Europe",
+        "Civilizations"
+      ],
+      "source_pages": []
+    }
+  ]
+}
