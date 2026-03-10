@@ -1,41 +1,31 @@
 # Question_mk
 
-:
-
-##📘 PDF → Questions Generator (MCQ & Essay)
+## 📘 PDF → Questions Generator (MCQ & Essay)
 
 This project converts any uploaded PDF document into automatically generated Multiple-Choice Questions (MCQ) or Essay questions using a Large Language Model (LLM).
-It’s built with FastAPI (backend), Gemini API (LLM), and a simple HTML/Tailwind/HTMX frontend for interaction.
+It's built with FastAPI (backend), Gemini API (LLM), and a simple HTML/Tailwind/HTMX frontend for interaction.
 
-🚀 Features
+## 🚀 Features
 
-📂 Upload a PDF and instantly generate MCQs or Essay questions.
+- 📂 Upload a PDF and instantly generate MCQs or Essay questions.
+- 🎯 Choose difficulty level: easy, medium, hard.
+- ⚙️ Configurable backend/model (default: Google Gemini 2.0 Flash).
+- 🧠 Supports semantic chunking of PDFs & context retrieval.
+- ✨ Reranking support with cross-encoder (optional).
+- 💾 Questions auto-saved as JSON in outputs/.
+- 🖥️ Clean web UI (HTMX + Tailwind).
 
-🎯 Choose difficulty level: easy, medium, hard.
+## 🛠️ Tech Stack
 
-⚙️ Configurable backend/model (default: Google Gemini 2.0 Flash).
+- Backend: FastAPI
+- Frontend: TailwindCSS + HTMX
+- LLM: Google Gemini API
+- PDF Parsing: PyMuPDF
+- Embeddings & Reranking: sentence-transformers / cross-encoders
 
-🧠 Supports semantic chunking of PDFs & context retrieval.
+## 📂 Project Structure
 
-✨ Reranking support with cross-encoder (optional).
-
-💾 Questions auto-saved as JSON in outputs/.
-
-🖥️ Clean web UI (HTMX + Tailwind).
-
-##🛠️ Tech Stack
-
-Backend: FastAPI
-
-Frontend: TailwindCSS + HTMX
-
-LLM: Google Gemini API
-
-PDF Parsing: PyMuPDF
-
-Embeddings & Reranking: sentence-transformers / cross-encoders
-
-##📂 Project Structure
+```
 Question_mk/
 │── config/             # Config (backend, model, API key)
 │   └── config.py
@@ -54,24 +44,33 @@ Question_mk/
 │── main.py             # FastAPI entrypoint
 │── requirements.txt
 └── README.md
+```
 
-##⚙️ Setup
-1️⃣ Clone the repo
+## ⚙️ Setup
+
+1️⃣ **Clone the repo**
+```bash
 git clone https://github.com/<your-username>/pdf-question-generator.git
 cd pdf-question-generator
+```
 
-2️⃣ Create a virtual environment
+2️⃣ **Create a virtual environment**
+```bash
 python -m venv .venv
 source .venv/bin/activate      # Linux/Mac
 .venv\Scripts\activate         # Windows (PowerShell)
+```
 
-3️⃣ Install dependencies
+3️⃣ **Install dependencies**
+```bash
 pip install -r requirements.txt
+```
 
-4️⃣ Configure your API key
+4️⃣ **Configure your API key**
 
-Edit config/config.py and add your Gemini API key:
+Edit `config/config.py` and add your Gemini API key:
 
+```python
 @dataclass
 class AppConfig:
     LLM_BACKEND: str = "gemini"
@@ -80,61 +79,46 @@ class AppConfig:
     USE_RERANK: bool = False
     HOST: str = "127.0.0.2"
     PORT: int = 8000
+```
 
-###▶️ Run the App
+### ▶️ Run the App
+
+```bash
 python main.py
+```
 
+### App will be served at:
 
-###App will be served at:
+- Backend API: http://127.0.0.2:8000
+- Frontend UI: http://127.0.0.2:8000/
+- Swagger docs: http://127.0.0.2:8000/docs
 
-Backend API: http://127.0.0.2:8000
+## 💡 Usage
 
-Frontend UI: http://127.0.0.2:8000/
+1. Open http://127.0.0.2:8000/
+2. Upload a PDF file.
+3. Select:
+   - Question type: MCQ or Essay
+   - Difficulty: easy / medium / hard
+   - Count: number of questions
+   - Topic (optional): narrow focus
+4. Click Generate.
+5. ✅ Questions appear on the page:
+   - MCQs → interactive quiz style
+   - Essays → with rubric & target keywords
+6. 💾 Download results as JSON (saved automatically in outputs/).
 
-Swagger docs: http://127.0.0.2:8000/docs
+## 🔮 Roadmap
 
-##💡 Usage
+- Add CSV export for questions.
+- Support more LLMs (OpenAI, Anthropic, Mistral).
+- Add option to shuffle MCQ choices.
+- Authentication + multi-user support.
 
-Open http://127.0.0.2:8000/
+## 🤝 Contributing
 
-Upload a PDF file.
+Pull requests are welcome! For major changes, open an issue first to discuss what you'd like to add.
 
-Select:
-
-Question type: MCQ or Essay
-
-Difficulty: easy / medium / hard
-
-Count: number of questions
-
-Topic (optional): narrow focus
-
-Click Generate.
-
-✅ Questions appear on the page:
-
-MCQs → interactive quiz style
-
-Essays → with rubric & target keywords
-
-💾 Download results as JSON (saved automatically in outputs/).
-
-
-
-##🔮 Roadmap
-
- Add CSV export for questions.
-
- Support more LLMs (OpenAI, Anthropic, Mistral).
-
- Add option to shuffle MCQ choices.
-
- Authentication + multi-user support.
-
-##🤝 Contributing
-
-Pull requests are welcome! For major changes, open an issue first to discuss what you’d like to add.
-
-###📜 License
+### 📜 License
 
 MIT License © 2025
