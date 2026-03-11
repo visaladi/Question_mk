@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "question": "What is the batch size used in the configuration snippet provided?",
+      "options": [
+        "32",
+        "16",
+        "8",
+        "None of the above"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration specifies a batch_size of 32, which is the number of samples per gradient update during training.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What does the 'noise_dim' parameter represent in the context?",
+      "options": [
+        "The dimensionality of the input noise vector for generating images.",
+        "The number of epochs to train the model.",
+        "The learning rate used during training.",
+        "None of the above"
+      ],
+      "answer_index": 0,
+      "rationale": "In a Generative Adversarial Network (GAN) context, 'noise_dim' typically refers to the size of the random noise vector that is fed into the generator network.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the value specified for the learning rate (lr) in the configuration?",
+      "options": [
+        "0001",
+        "01",
+        "1",
+        "None of the above"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration sets a learning rate of 0.0001, which is commonly used in neural network training to control the step size during optimization.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What does 'image_dim' refer to in the configuration?",
+      "options": [
+        "The number of pixels in an image (e.g., 28x28 for MNIST).",
+        "The dimensionality of the noise vector.",
+        "The total number of classes or labels.",
+        "None of the above"
+      ],
+      "answer_index": 0,
+      "rationale": "'image_dim' is set to 28 * 28, which corresponds to the flattened size of a 28x28 pixel image commonly used in datasets like MNIST.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "How many epochs are planned for training according to the configuration?",
+      "options": [
+        "80",
+        "160",
+        "40",
+        "None of the above"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration specifies that the model should be trained for 80 epochs, which is a standard way to define the number of complete passes over the training dataset.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    }
+  ]
+}

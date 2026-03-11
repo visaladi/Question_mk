@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "question": "What is the device used for training the model if a CUDA device is not available?",
+      "options": [
+        "CPU",
+        "GPU",
+        "NVIDIA",
+        "AMD"
+      ],
+      "answer_index": 0,
+      "rationale": "The code snippet specifies that the device should be set to 'cpu' if a CUDA device is not available, indicating that the model will be trained on the CPU.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Understand",
+      "difficulty": "hard"
+    },
+    {
+      "question": "What is the learning rate of the model?",
+      "options": [
+        "00001",
+        "0001",
+        "001",
+        "01"
+      ],
+      "answer_index": 1,
+      "rationale": "The 'lr' variable is set to 0.0001, which is the learning rate of the model.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Create",
+      "difficulty": "hard"
+    },
+    {
+      "question": "How many epochs are used for training the model?",
+      "options": [
+        "40",
+        "60",
+        "80",
+        "100"
+      ],
+      "answer_index": 2,
+      "rationale": "The number of epochs is specified as 80 in the configuration.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Analyze",
+      "difficulty": "hard"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "question": "Which of the following is NOT a typical characteristic of a mass-produced home?",
+      "options": [
+        "Site-specific design",
+        "Economy of scale in production",
+        "Use of standardized plans",
+        "Repetitive design elements"
+      ],
+      "answer_index": 0,
+      "rationale": "Mass-produced homes are characterized by economy of scale, standardized plans, and repetitive design elements to reduce costs. Site-specific design is not a characteristic of mass-produced homes as they are designed to be built on multiple sites without significant customization. (Page 4)",
+      "source_pages": [
+        4
+      ],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What is a primary advantage of mass-produced housing?",
+      "options": [
+        "High degree of customization",
+        "Lower per-unit cost",
+        "Unique architectural design",
+        "Adaptability to any site"
+      ],
+      "answer_index": 1,
+      "rationale": "Mass-produced housing leverages economies of scale to reduce the per-unit cost, making it more affordable compared to custom-built homes. Customization and unique design are typically limited in mass production. (Page 4)",
+      "source_pages": [
+        4
+      ],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which of the following is a key factor that contributes to the lower cost of mass-produced homes?",
+      "options": [
+        "Use of expensive, high-quality materials",
+        "Economies of scale in production",
+        "Extensive customization for each buyer",
+        "Unique architectural designs"
+      ],
+      "answer_index": 1,
+      "rationale": "Economies of scale in production is a key factor that contributes to the lower cost of mass-produced homes. This involves bulk purchasing of materials, standardized designs, and efficient construction processes, which reduce the overall cost per unit. (Page 4)",
+      "source_pages": [
+        4
+      ],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which of the following is NOT a typical characteristic of cloud computing?",
+      "options": [
+        "On-demand self-service",
+        "Broad network access",
+        "Resource pooling",
+        "Single-tenant infrastructure"
+      ],
+      "answer_index": 3,
+      "rationale": "Cloud computing typically involves multi-tenant infrastructure where resources are shared among multiple users. Single-tenant infrastructure, where resources are dedicated to a single user, is not a typical characteristic of cloud computing. (pg. 4)",
+      "source_pages": [
+        4
+      ],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What is the primary benefit of 'broad network access' in cloud computing?",
+      "options": [
+        "Restricting access to authorized personnel only",
+        "Enabling access from various devices and locations",
+        "Limiting the types of networks that can be used",
+        "Requiring specialized hardware for network connectivity"
+      ],
+      "answer_index": 1,
+      "rationale": "Broad network access allows cloud services to be accessed from a variety of devices (e.g., mobile phones, tablets, laptops) and locations, making it convenient for users. (pg. 4)",
+      "source_pages": [
+        4
+      ],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    }
+  ]
+}

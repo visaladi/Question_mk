@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "question": "How can the principles of user-centered design be applied to improve the accessibility of a mobile application for individuals with visual impairments? Detail specific design considerations and justify your choices.",
+      "difficulty": "hard",
+      "bloom": "Apply",
+      "rubric_bullets": [
+        "Demonstrates a clear understanding of user-centered design principles.",
+        "Identifies specific accessibility challenges faced by users with visual impairments.",
+        "Proposes practical design solutions that address these challenges.",
+        "Justifies design choices with sound reasoning and evidence.",
+        "Considers a range of design elements (e.g., visual, auditory, tactile)."
+      ],
+      "target_keywords": [
+        "user-centered design",
+        "accessibility",
+        "mobile application",
+        "visual impairments",
+        "design considerations"
+      ],
+      "source_pages": []
+    },
+    {
+      "question": "Compare and contrast the strengths and weaknesses of two different software development methodologies (e.g., Agile and Waterfall) in the context of a large-scale enterprise project. Under what circumstances would one methodology be preferred over the other?",
+      "difficulty": "hard",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Accurately describes the key characteristics of each methodology.",
+        "Provides a balanced comparison of the strengths and weaknesses of each methodology.",
+        "Identifies specific project characteristics that would favor one methodology over the other.",
+        "Demonstrates a nuanced understanding of the trade-offs involved in choosing a methodology.",
+        "Supports claims with relevant examples or evidence."
+      ],
+      "target_keywords": [
+        "software development methodologies",
+        "Agile",
+        "Waterfall",
+        "enterprise project",
+        "strengths",
+        "weaknesses"
+      ],
+      "source_pages": []
+    },
+    {
+      "question": "Design a database schema for an online library system that includes tables for books, authors, patrons, and loans. Specify the data types for each field and identify primary and foreign keys. Explain how your schema ensures data integrity and prevents data redundancy.",
+      "difficulty": "hard",
+      "bloom": "Create",
+      "rubric_bullets": [
+        "Creates a well-structured database schema with appropriate tables and fields.",
+        "Correctly identifies primary and foreign keys to establish relationships between tables.",
+        "Selects appropriate data types for each field to ensure data accuracy.",
+        "Explains how the schema enforces data integrity and prevents data redundancy.",
+        "Demonstrates an understanding of database normalization principles."
+      ],
+      "target_keywords": [
+        "database schema",
+        "online library system",
+        "tables",
+        "primary keys",
+        "foreign keys",
+        "data integrity",
+        "data redundancy"
+      ],
+      "source_pages": []
+    }
+  ]
+}

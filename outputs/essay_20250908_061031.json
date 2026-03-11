@@ -1,0 +1,78 @@
+{
+  "items": [
+    {
+      "question": "Explain the concept of a 'hypervisor' and differentiate between Type 1 and Type 2 hypervisors, providing examples of each and discussing their respective advantages and disadvantages in a cloud computing environment.",
+      "difficulty": "hard",
+      "bloom": "Analyze",
+      "rubric_bullets": [
+        "Accurately defines hypervisor and its role in virtualization.",
+        "Clearly differentiates between Type 1 and Type 2 hypervisors.",
+        "Provides relevant examples of each type of hypervisor.",
+        "Discusses the advantages and disadvantages of each type in the context of cloud computing.",
+        "Demonstrates a comprehensive understanding of the underlying concepts."
+      ],
+      "target_keywords": [
+        "hypervisor",
+        "Type 1",
+        "Type 2",
+        "virtualization",
+        "cloud computing"
+      ],
+      "source_pages": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "question": "Describe the key characteristics of cloud computing, including on-demand self-service, broad network access, resource pooling, rapid elasticity, and measured service. Provide a detailed scenario illustrating how each of these characteristics benefits a business adopting a cloud-based solution.",
+      "difficulty": "hard",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Accurately identifies and defines the five key characteristics of cloud computing.",
+        "Provides a clear and detailed explanation of each characteristic.",
+        "Presents a realistic and relevant scenario.",
+        "Effectively illustrates how each characteristic benefits the business in the scenario.",
+        "Demonstrates a strong understanding of the practical implications of cloud computing."
+      ],
+      "target_keywords": [
+        "on-demand self-service",
+        "resource pooling",
+        "rapid elasticity",
+        "measured service",
+        "cloud characteristics"
+      ],
+      "source_pages": [
+        1,
+        2,
+        4,
+        5
+      ]
+    },
+    {
+      "question": "Compare and contrast the Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS) cloud service models. For each model, provide a specific use case and discuss the level of control and responsibility that the customer retains.",
+      "difficulty": "hard",
+      "bloom": "Analyze",
+      "rubric_bullets": [
+        "Clearly defines and differentiates between IaaS, PaaS, and SaaS.",
+        "Provides a relevant and specific use case for each model.",
+        "Accurately describes the level of control retained by the customer for each model.",
+        "Discusses the responsibilities of the customer for each model.",
+        "Demonstrates a comprehensive understanding of the different cloud service models."
+      ],
+      "target_keywords": [
+        "IaaS",
+        "PaaS",
+        "SaaS",
+        "cloud service models",
+        "control",
+        "responsibility"
+      ],
+      "source_pages": [
+        2,
+        3,
+        4
+      ]
+    }
+  ]
+}

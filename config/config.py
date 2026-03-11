@@ -1,16 +1,14 @@
 # config.py
 from dataclasses import dataclass
+import os
 
 @dataclass
 class AppConfig:
     # Static backend/model selection
     LLM_BACKEND: str = "gemini"   # "gemini" | "ollama" | "hf" | "lora"
-    #LLM_MODEL: str   = "qwen2.5:1.5b-instruct" # "gemini-2.0-flash" | "Qwen/Qwen2.5-7B-Instruct" | "qwen2.5:1.5b-instruct"
-    LLM_MODEL = "gemini-2.0-flash"
-    # Directly put your Gemini API key here
-    # Gemini API key is now loaded from environment variable
-    import os
+    LLM_MODEL = os.getenv("MODEL_NAME", "qwen2.5:1.5b-instruct")  # "gemini-2.0-flash" | "Qwen/Qwen2.5-7B-Instruct" | "qwen2.5:1.5b-instruct"
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    OLLAMA_URL: str = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
     # Reranker toggle (optional)
     USE_RERANK: bool = False

@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "question": "What is the dimension of the noise vector used in the configuration?",
+      "options": [
+        "10",
+        "28",
+        "32",
+        "80"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration specifies 'noise_dim = 10', indicating the noise vector's dimension.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "If CUDA is available, which device will be used according to the configuration?",
+      "options": [
+        "CPU",
+        "GPU",
+        "TPU",
+        "CUDA"
+      ],
+      "answer_index": 3,
+      "rationale": "The configuration uses 'torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")', which means CUDA will be used if available.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the learning rate specified in the configuration?",
+      "options": [
+        "01",
+        "001",
+        "0001",
+        "00001"
+      ],
+      "answer_index": 2,
+      "rationale": "The configuration specifies 'lr = 0.0001' as the learning rate.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "How many epochs are set for training in the configuration?",
+      "options": [
+        "10",
+        "32",
+        "50",
+        "80"
+      ],
+      "answer_index": 3,
+      "rationale": "The configuration specifies 'epochs = 80', indicating the number of training epochs.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the dimension of the image used in the configuration?",
+      "options": [
+        "10",
+        "32",
+        "784",
+        "80"
+      ],
+      "answer_index": 2,
+      "rationale": "The configuration specifies 'image_dim = 28 * 28', which equals 784.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    }
+  ]
+}

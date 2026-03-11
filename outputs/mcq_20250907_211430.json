@@ -1,0 +1,74 @@
+{
+  "items": [
+    {
+      "question": "What is one of the primary functions of the plasma membrane, as described in the text?",
+      "options": [
+        "To provide a rigid, impenetrable barrier around the cell.",
+        "To selectively regulate the passage of substances into and out of the cell.",
+        "To synthesize proteins for use within the cell.",
+        "To store genetic information for cell division."
+      ],
+      "answer_index": 1,
+      "rationale": "The plasma membrane's primary function is to selectively regulate the passage of substances, ensuring that essential molecules enter and waste products exit. (No specific page reference provided, based on general knowledge from the context.)",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which of the following is NOT typically considered a component of the plasma membrane?",
+      "options": [
+        "Phospholipids",
+        "Proteins",
+        "Nucleic acids",
+        "Carbohydrates"
+      ],
+      "answer_index": 2,
+      "rationale": "The plasma membrane is primarily composed of a phospholipid bilayer with embedded proteins and carbohydrates. Nucleic acids are not typically considered a structural component of the plasma membrane. (No specific page reference provided, based on general knowledge from the context.)",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "What is the primary role of membrane proteins in the plasma membrane?",
+      "options": [
+        "To provide structural support to the membrane.",
+        "To catalyze chemical reactions within the cytoplasm.",
+        "To facilitate the transport of specific molecules across the membrane.",
+        "To store energy for cellular processes."
+      ],
+      "answer_index": 2,
+      "rationale": "Membrane proteins play a crucial role in facilitating the transport of specific molecules across the plasma membrane, acting as channels or carriers. (No specific page reference provided, based on general knowledge from the context.)",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the primary focus of the passage?",
+      "options": [
+        "The history of economic systems.",
+        "The definition and characteristics of capitalism.",
+        "A comparison of different political ideologies.",
+        "The role of government in a socialist economy."
+      ],
+      "answer_index": 1,
+      "rationale": "The passage primarily discusses the definition, key characteristics, and different forms of capitalism.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    },
+    {
+      "question": "Which of the following is NOT mentioned as a key aspect of capitalism?",
+      "options": [
+        "Private property",
+        "Free markets",
+        "Profit motive",
+        "Government control of production"
+      ],
+      "answer_index": 3,
+      "rationale": "The passage discusses private property, free markets, and profit motive as key aspects of capitalism, but it contrasts capitalism with government control of production.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "easy"
+    }
+  ]
+}

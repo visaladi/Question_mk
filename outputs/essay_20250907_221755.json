@@ -1,0 +1,72 @@
+{
+  "items": [
+    {
+      "question": "How does the concept of 'confirmation bias' impact the interpretation and application of data in decision-making processes, and what strategies can be employed to mitigate its effects?",
+      "difficulty": "hard",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Explanation of confirmation bias and its effects.",
+        "Discussion of how confirmation bias skews data interpretation.",
+        "Analysis of the impact on decision-making.",
+        "Description of strategies to reduce confirmation bias.",
+        "Examples illustrating the application of these concepts."
+      ],
+      "target_keywords": [
+        "confirmation bias",
+        "data interpretation",
+        "decision-making",
+        "mitigation strategies",
+        "cognitive biases"
+      ],
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "question": "In what ways can an understanding of cognitive biases, such as anchoring bias and availability heuristic, improve the effectiveness of communication strategies in marketing or public relations?",
+      "difficulty": "hard",
+      "bloom": "Analyze",
+      "rubric_bullets": [
+        "Identification and explanation of anchoring bias and availability heuristic.",
+        "Discussion of how these biases influence perception and decision-making.",
+        "Analysis of how communication strategies can leverage or counteract these biases.",
+        "Examples of effective communication strategies incorporating these insights.",
+        "Consideration of ethical implications."
+      ],
+      "target_keywords": [
+        "cognitive biases",
+        "anchoring bias",
+        "availability heuristic",
+        "communication strategies",
+        "marketing",
+        "public relations"
+      ],
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "question": "Critically evaluate the role of heuristics in everyday problem-solving. What are the trade-offs between efficiency and accuracy when relying on heuristics, and how can individuals optimize their use of heuristics to improve decision outcomes?",
+      "difficulty": "hard",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Clear definition and examples of heuristics.",
+        "Discussion of the efficiency and accuracy trade-off.",
+        "Analysis of situations where heuristics are beneficial or detrimental.",
+        "Strategies for optimizing heuristic use.",
+        "Consideration of individual differences in heuristic reliance."
+      ],
+      "target_keywords": [
+        "heuristics",
+        "problem-solving",
+        "efficiency",
+        "accuracy",
+        "decision outcomes",
+        "cognitive shortcuts"
+      ],
+      "source_pages": [
+        1
+      ]
+    }
+  ]
+}

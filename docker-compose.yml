@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: question_mk_api
+    ports: ["8000:8000"]
+    env_file: .env
+    depends_on:
+      - mlflow
+    # dev-only hot reload (remove in prod)
+    volumes:
+      - .:/app
+
+  # only needed when LLM_PROVIDER=ollama
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    profiles: ["ollama"]
+    ports: ["11434:11434"]
+    volumes:
+      - ollama:/root/.ollama
+    healthcheck:
+      test: ["CMD", "bash", "-lc", "curl -s http://localhost:11434/api/tags || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: mlflow
+    ports: ["5000:5000"]
+    volumes:
+      - ./mlruns:/mlruns
+    command: >
+      mlflow ui --backend-store-uri mlruns
+      --host 0.0.0.0
+      --port 5000
+
+volumes:
+  ollama:

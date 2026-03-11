@@ -1,0 +1,72 @@
+{
+  "items": [
+    {
+      "question": "How might the principles of operant conditioning be applied to design a more effective educational program for young children, and what are the potential ethical considerations of such an approach?",
+      "difficulty": "hard",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Comprehensive understanding of operant conditioning principles.",
+        "Clear application of these principles to educational program design.",
+        "Thoughtful discussion of ethical considerations, including potential drawbacks.",
+        "Demonstrates critical thinking and nuanced perspective.",
+        "Well-organized and coherent response."
+      ],
+      "target_keywords": [
+        "operant conditioning",
+        "educational program",
+        "ethical considerations",
+        "reinforcement",
+        "punishment"
+      ],
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "question": "Compare and contrast classical and operant conditioning, providing specific examples of how each type of learning might manifest in everyday life. In what ways are they similar, and where do they diverge?",
+      "difficulty": "hard",
+      "bloom": "Analyze",
+      "rubric_bullets": [
+        "Accurate definitions of both classical and operant conditioning.",
+        "Clear and relevant examples illustrating each type of learning.",
+        "Detailed comparison highlighting both similarities and differences.",
+        "Demonstrates a thorough understanding of the underlying mechanisms.",
+        "Well-structured and easy-to-follow response."
+      ],
+      "target_keywords": [
+        "classical conditioning",
+        "operant conditioning",
+        "comparison",
+        "examples",
+        "similarities",
+        "differences"
+      ],
+      "source_pages": [
+        1
+      ]
+    },
+    {
+      "question": "Discuss the role of reinforcement schedules in operant conditioning. How do different schedules (e.g., fixed ratio, variable interval) affect behavior, and why might one schedule be more effective than another in specific situations?",
+      "difficulty": "hard",
+      "bloom": "Evaluate",
+      "rubric_bullets": [
+        "Demonstrates a strong understanding of various reinforcement schedules.",
+        "Accurately explains the impact of each schedule on behavior.",
+        "Provides insightful analysis of why certain schedules are more effective in specific contexts.",
+        "Supports claims with relevant examples or research findings.",
+        "Clear and concise writing style."
+      ],
+      "target_keywords": [
+        "reinforcement schedules",
+        "fixed ratio",
+        "variable interval",
+        "operant conditioning",
+        "behavior",
+        "effectiveness"
+      ],
+      "source_pages": [
+        1
+      ]
+    }
+  ]
+}

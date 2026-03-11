@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "question": "What is the dimension of the noise vector used in the configuration?",
+      "options": [
+        "10",
+        "28",
+        "32",
+        "80"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration specifies `noise_dim = 10`, indicating the noise vector's dimension.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "If CUDA is not available, what device is used?",
+      "options": [
+        "CPU",
+        "GPU",
+        "TPU",
+        "MPS"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration uses `torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")` to set the device. If CUDA is not available, it defaults to CPU.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the learning rate (lr) specified in the configuration?",
+      "options": [
+        "0001",
+        "001",
+        "01",
+        "1"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration explicitly sets `lr = 0.0001`.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "How many epochs are set for training?",
+      "options": [
+        "80",
+        "10",
+        "32",
+        "28"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration specifies `epochs = 80`.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the dimension of the image?",
+      "options": [
+        "28 * 28",
+        "10",
+        "32",
+        "80"
+      ],
+      "answer_index": 0,
+      "rationale": "The configuration specifies `image_dim = 28 * 28`.",
+      "source_pages": [
+        13
+      ],
+      "bloom": "Remember",
+      "difficulty": "medium"
+    }
+  ]
+}

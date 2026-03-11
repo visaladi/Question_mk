@@ -1,0 +1,60 @@
+{
+  "items": [
+    {
+      "question": "Which of the following best describes the primary goal of adversarial machine learning?",
+      "options": [
+        "To improve the robustness and security of machine learning models against malicious attacks.",
+        "To accelerate the training process of deep neural networks.",
+        "To reduce the computational resources required for machine learning inference.",
+        "To enhance the interpretability of machine learning models."
+      ],
+      "answer_index": 0,
+      "rationale": "Adversarial machine learning focuses on making machine learning models more resilient to attacks and manipulations, ensuring they perform reliably even in hostile environments.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "What is the main purpose of adversarial examples in the context of machine learning?",
+      "options": [
+        "To confuse machine learning models, causing them to make incorrect predictions.",
+        "To improve the accuracy of machine learning models on clean data.",
+        "To reduce the size of machine learning models.",
+        "To visualize the internal representations of machine learning models."
+      ],
+      "answer_index": 0,
+      "rationale": "Adversarial examples are specifically designed to mislead machine learning models, leading to incorrect classifications or decisions. They expose vulnerabilities in the model's decision-making process.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Which of the following is a common technique used to generate adversarial examples?",
+      "options": [
+        "Adding small, carefully crafted perturbations to input data.",
+        "Increasing the size of the training dataset.",
+        "Simplifying the model architecture.",
+        "Applying regularization techniques during training."
+      ],
+      "answer_index": 0,
+      "rationale": "Adversarial examples are typically created by adding small, often imperceptible, perturbations to the original input data. These perturbations are designed to maximize the model's prediction error.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    },
+    {
+      "question": "Which of the following is the most accurate description of the role of context in communication?",
+      "options": [
+        "Context is irrelevant as long as the message is clear.",
+        "Context only matters in formal communication settings.",
+        "Context shapes how we interpret and give meaning to communication.",
+        "Context is solely determined by the sender of the message."
+      ],
+      "answer_index": 2,
+      "rationale": "Context is crucial because it influences how we understand and assign meaning to communication, affecting interpretation and response.",
+      "source_pages": [],
+      "bloom": "Understand",
+      "difficulty": "medium"
+    }
+  ]
+}
